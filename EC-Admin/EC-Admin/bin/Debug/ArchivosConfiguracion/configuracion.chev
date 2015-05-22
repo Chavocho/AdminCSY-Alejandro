@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<configuraciones>
+  <basedatos>
+    <server>/bmEtI8XUlOHHG6ynrK0gw==</server>
+    <base>VsmsJeNeWgNkx7oGHE5eDFP1I+gLGkXZ</base>
+    <usuario>M7PjMfY2PVY=</usuario>
+    <pass>U/Uj6AsaRdk=</pass>
+  </basedatos>
+  <sucursal>
+    <id>z9f4VO/8BoU=</id>
+    <nombre>2zqoOXCtLDM8m5avbt/L9g==</nombre>
+  </sucursal>
+  <correo>
+    <correo_interno>U/Uj6AsaRdk=</correo_interno>
+    <pass_interno>U/Uj6AsaRdk=</pass_interno>
+    <puerto_interno>U/Uj6AsaRdk=</puerto_interno>
+    <host_interno>U/Uj6AsaRdk=</host_interno>
+  </correo>
+  <ticket>
+    <lineaSup01>XaW+SwBhLZs=</lineaSup01>
+    <lineaSup02>43ck5n/XBGQ=</lineaSup02>
+    <lineaSup03>swUYLykW1AA=</lineaSup03>
+    <lineaSup04>1pTd6GcP6Ys=</lineaSup04>
+    <lineaSup05>VIv1srJJDUg=</lineaSup05>
+    <lineaSup06>3wwLWFlP46s=</lineaSup06>
+    <lineaSup07>ykWpd8wQBeE=</lineaSup07>
+    <lineaInf01>x0G6tzlGkmE=</lineaInf01>
+    <lineaInf02>UO7KBa+Ta5M=</lineaInf02>
+    <lineaInf03>Sdn920R+n0IdqdzWcZPhFA==</lineaInf03>
+    <impresora>JmiYVF2jsY2KC0m/uuXyAsjhLYdC761FZ38AAkxO5iQ=</impresora>
+    <preguntar>mApNpFvMMuQ=</preguntar>
+    <imprimir>mApNpFvMMuQ=</imprimir>
+  </ticket>
+</configuraciones>

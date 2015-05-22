@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&v=3&key=AIzaSyBAsxp5MZW-eJlJryQnekIxNZHAYU0BhU4"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+	// Instancia del geocodificador
+	var geocoder = new google.maps.Geocoder();
+	
+	var map; //este sera nuestro objeto mapa declarado de forma global
+	
+	// arreglo que contendra las direcciones a transformar para los diferentes destinos de la ruta
+	//var ruta=["pino suarez 99 tonala 45400 Jalisco México"];
+	
+	<!-- Esta funcion nos añadira las marcas de forma dinamica en el mapa
+	function addMark(location){
+		marker = new google.maps.Marker({
+			position: location,
+			map: map
+			//icon: "icons/super-mono-3d-01.png"
+		});
+	}
+	
+	function convertAddress(direccion)
+	{
+		//for(var z in direccion){
+			// Propiedades de la georreferenciación
+			var request = {
+				address: direccion
+			}
+				
+			// Invocación a la georreferenciación (proceso asíncrono) 
+			geocoder.geocode(request, function(results, status) {
+				
+				//si el estado de la llamado es OK
+				if (status == google.maps.GeocoderStatus.OK) {
+					
+					// Centramos el mapa en nuestra direccion
+					map.setCenter(results[0].geometry.location);
+					
+					// Creamos la marca dinamica con nuestra funcion
+					addMark(results[0].geometry.location);
+				}
+			});
+		//}
+	}
+	
+	function initialize() {
+		
+		// Estas seran nuestras opciones de display para el mapa		
+		var myOptions = {
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+			};		
+			
+		//instanciamos nuestro mapa
+		map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+		convertAddress("pino suarez 99 tonala 45400 Jalisco México");
+	}
+ 
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas" style="width: 595px; height: 266px;"></div>
+</body>
+</html>
