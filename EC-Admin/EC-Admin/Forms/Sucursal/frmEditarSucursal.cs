@@ -89,13 +89,15 @@ namespace EC_Admin.Forms
         {
             try
             {
+                int cp;
+                int.TryParse(txtCP.Text, out cp);
                 Sucursal s = new Sucursal();
                 s.IDDireccion = idD;
                 s.Nombre = txtNombre.Text;
                 s.Calle = txtCalle.Text;
                 s.NumExt = txtNumExt.Text;
                 s.NumInt = txtNumInt.Text;
-                s.CP = int.Parse(txtCP.Text);
+                s.CP = cp;
                 s.Colonia = txtColonia.Text;
                 s.Estado = txtEstado.Text;
                 s.Ciudad = txtCiudad.Text;
@@ -123,51 +125,88 @@ namespace EC_Admin.Forms
             if (txtNombre.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
-                return false;
-            }
-            if (txtRFC.Text.Trim() != "")
-            {
-                if (txtRFC.Text.Length < 12)
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo RFC debe tener 12 o 13 caracteres", "Admin CSY");
-                    return false;
-                }
-            }
-            if (txtCalle.Text.Trim() == "")
-            {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo calle es obligatorio", "Admin CSY");
-                return false;
-            }
-            if (txtNumInt.Text.Trim() != "" && txtNumExt.Text.Trim() == "")
-            {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número exterior necesita ser ingresado antes que el número interior", "Admin CSY");
-                return false;
-            }
-            if (txtNumExt.Text.Trim() == "")
-            {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número exterior es obligatorio", "Admin CSY");
-                return false;
-            }
-            if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() == "")
-            {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar al menos un número teléfonico", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
             }
             else
             {
-                if (txtTelefono02.Text.Trim() != "" && txtTelefono01.Text.Trim() == "")
+                FuncionesGenerales.ColoresBien(txtNombre);
+            }
+            //Por el momento esta validación estara deshabilidata
+            /*if (txtRFC.Text.Trim() != "")
+            {
+                if (txtRFC.Text.Length < 12)
                 {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El primer campo de teléfono debe ser ingresado antes que el segundo", "Admin CSY");
+                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo RFC debe tener 12 o 13 caracteres", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtRFC);
                     return false;
                 }
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtRFC);
+            }*/
+
+            if (txtCalle.Text.Trim() == "")
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo calle es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtCalle);
+                return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtCalle);
+            }
+            if (txtNumInt.Text.Trim() != "" && txtNumExt.Text.Trim() == "")
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número exterior necesita ser ingresado antes que el número interior", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNumExt);
+                return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNumInt);
+                FuncionesGenerales.ColoresBien(txtNumExt);
+            }
+            if (txtNumExt.Text.Trim() == "")
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número exterior es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNumExt);
+                return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNumExt);
+            }
+            if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() == "")
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar al menos un número teléfonico", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtTelefono01);
+                return false;
+            }
+            else if (txtTelefono02.Text.Trim() != "" && txtTelefono01.Text.Trim() == "")
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El primer campo de teléfono debe ser ingresado antes que el segundo", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtTelefono01);
+                return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtTelefono01);
+                FuncionesGenerales.ColoresBien(txtTelefono02);
             }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El correo ingresado no se reconoce cómo correo válido", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtCorreo);
                     return false;
                 }
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtCorreo);
             }
             return true;
         }

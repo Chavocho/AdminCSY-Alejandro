@@ -14,10 +14,31 @@ namespace EC_Admin
     {
         int intentos = 0;
         int c = 0;
+        DelegadoMensajes m = new DelegadoMensajes(FuncionesGenerales.Mensaje);
 
         public frmSplash()
         {
             InitializeComponent();
+        }
+
+        private void AsignarSucursal()
+        {
+            (new Forms.frmAsignarSucursal()).ShowDialog();
+        }
+
+        private void ActualizarLabel(string mensaje)
+        {
+            lblEstado.Text = mensaje;
+            lblEstado.Left = (this.Width - lblEstado.Width) / 2;
+        }
+        
+        private void ReconfigurarConexion()
+        {
+            DialogResult re = FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "La conexión con los datos ingresados no se ha logrado efectuar, ¿desea modificarlos?", "Admin CSY");
+            if (re == System.Windows.Forms.DialogResult.Yes)
+            {
+                (new Forms.frmConfigBaseDatos(true)).ShowDialog(this);
+            }
         }
 
         #region Paso 01
@@ -36,7 +57,7 @@ namespace EC_Admin
                     if (id <= 0)
                     {
                         FuncionesGenerales.IniciarProceso("C:\\xampp\\mysql_start.bat");
-                        System.Threading.Thread.Sleep(3000);
+                        System.Threading.Thread.Sleep(1000);
                         intentos += 1;
                         MySQL();
                     }
@@ -64,15 +85,15 @@ namespace EC_Admin
         {
             if (!ConfiguracionXML.ExisteConfiguracion("basedatos"))
             {
-                DialogResult r = FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "No tienes configurada tu conexión con la base de datos. ¿Deseas configurarla?", "Admin CSY");
-                if (r == System.Windows.Forms.DialogResult.Yes)
+                DialogResult r = (DialogResult)Enum.Parse(typeof(DialogResult), this.Invoke(m, new object[] { this, Mensajes.Pregunta, "No tienes configurada tu conexión con la base de datos. ¿Deseas configurarla?", "Admin CSY", null }).ToString());
+                if (r == DialogResult.Yes)
                 {
-                    (new Forms.frmConfigBaseDatos(false)).ShowDialog(this);
+                    this.Invoke(new Action(() => { new Forms.frmConfigBaseDatos(false); }));
                     ConfiguracionBaseDatos();
                 }
                 else
                 {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Informativo, "La aplicación se cerrará.", "Admin CSY");
+                    this.Invoke(m, new object[] { this, Mensajes.Informativo, "La aplicación se cerrará.", "Admin CSY" });
                     Application.Exit();
                 }
             }
@@ -95,28 +116,12 @@ namespace EC_Admin
             {
                 if (!ConexionBD.Ping())
                 {
-                    DialogResult re = FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "La conexión con los datos ingresados no se ha logrado efectuar, ¿desea modificarlos?", "Admin CSY");
-                    if (re == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        (new Forms.frmConfigBaseDatos(true)).ShowDialog(this);
-                    }
-                }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException)
-            {
-                DialogResult re = FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "La conexión con los datos ingresados no se ha logrado efectuar, ¿desea modificarlos?", "Admin CSY");
-                if (re == System.Windows.Forms.DialogResult.Yes)
-                {
-                    (new Forms.frmConfigBaseDatos(true)).ShowDialog(this);
+                    this.Invoke(new Action(ReconfigurarConexion));
                 }
             }
             catch (Exception)
             {
-                DialogResult re = FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "La conexión con los datos ingresados no se ha logrado efectuar, ¿desea modificarlos?", "Admin CSY");
-                if (re == System.Windows.Forms.DialogResult.Yes)
-                {
-                    (new Forms.frmConfigBaseDatos(true)).ShowDialog(this);
-                }
+                this.Invoke(new Action(ReconfigurarConexion));
             }
         }
 
@@ -129,6 +134,21 @@ namespace EC_Admin
             {
                 Config.idSucursal = int.Parse(ConfiguracionXML.LeerConfiguración("sucursal", "id"));
                 Config.nombreSucursal = ConfiguracionXML.LeerConfiguración("sucursal", "nombre");
+            }
+            else
+            {
+                DialogResult r = (DialogResult)Enum.Parse(typeof(DialogResult), this.Invoke(m, new object[] { this, Mensajes.Pregunta, "No tienes asignada ninguna sucursal, ¿deseas asignarla ahora?", "Admin CSY", null }).ToString());
+                if (r == DialogResult.Yes)
+                {
+                    this.Invoke((new Action(AsignarSucursal)));
+                }
+                else
+                {
+                    this.Invoke(m, new object[] { this, Mensajes.Informativo, "La aplicación se cerrará.", "Admin CSY" });
+                    bgwCargando.CancelAsync();
+                    Application.Exit();
+                }
+
             }
         }
         #endregion
@@ -184,38 +204,67 @@ namespace EC_Admin
             }
         }
 
+        private void ConfiguracionPOS()
+        {
+            if (ConfiguracionXML.ExisteConfiguracion("POS"))
+            {
+                Config.iva = decimal.Parse(ConfiguracionXML.LeerConfiguración("POS", "IVA"));
+            }
+        }
         #endregion
 
         private void frmSplash_Shown(object sender, EventArgs e)
         {
             try
             {
-                try
-                {
-                    MySQL();
-                }
-                catch (Exception ex)
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Error, "La aplicación no ha logrado iniciar el servicio de MySQL. La aplicación se cerrará.", "Admin CSY", ex);
-                    Application.Exit();
-                    return;
-                }
-                ConfiguracionBaseDatos();
-                ConfiguracionSucursal();
-                InicializarPropiedades();
-                CorreoInterno();
+                bgwCargando.RunWorkerAsync();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            (new frmLogin()).Show();
-            this.Close();
         }
 
         private void t_Tick(object sender, EventArgs e)
         {
             c += 1;
+        }
+
+        private void bgwCargando_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (bgwCargando.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+            Action<string> lbl = new Action<string>(ActualizarLabel);
+            try
+            {
+                this.Invoke(lbl, "Inicializando la conexión con la base de datos");
+                MySQL();
+            }
+            catch (Exception ex)
+            {
+                this.Invoke(m, new object[] { this, Mensajes.Error, "No se ha logrado inicializar la conexión a la base de datos. La aplicación se cerrará.", "Admin CSY", ex });
+                Application.Exit();
+            }
+            this.Invoke(lbl, "Inicializando la configuración de la base de datos");
+            ConfiguracionBaseDatos();
+            this.Invoke(lbl, "Inicializando los datos de sucursal");
+            ConfiguracionSucursal();
+            this.Invoke(lbl, "Verificando la conexión con la base de datos");
+            VerificarConexion();
+            this.Invoke(lbl, "Inicializando cantidades de base de datos");
+            InicializarPropiedades();
+            this.Invoke(lbl, "Inicializando la configuración del punto de venta");
+            ConfiguracionPOS();
+            this.Invoke(lbl, "Inicializando los datos de correo");
+            CorreoInterno();
+        }
+
+        private void bgwCargando_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            (new frmLogin()).Show();
+            this.Close();
         }
     }
 }

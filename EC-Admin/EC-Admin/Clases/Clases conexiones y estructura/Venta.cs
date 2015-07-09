@@ -21,9 +21,10 @@ namespace EC_Admin
         private decimal impuesto;
         private decimal descuento;
         private decimal total;
-        private bool factura;
-        private string folioFactura;
         private TipoPago tipo;
+        private string terminacionTarjeta;
+        private string terminalTarjeta;
+        private decimal cargoTarjeta;
         private int createUser;
         private DateTime createTime;
         private int updateUser;
@@ -91,22 +92,28 @@ namespace EC_Admin
             set { total = value; }
         }
 
-        public bool Factura
-        {
-            get { return factura; }
-            set { factura = value; }
-        }
-
-        public string FolioFactura
-        {
-            get { return folioFactura; }
-            set { folioFactura = value; }
-        }
-
         public TipoPago Tipo
         {
             get { return tipo; }
             set { tipo = value; }
+        }
+
+        public string TerminacionTarjeta
+        {
+            get { return terminacionTarjeta; }
+            set { terminacionTarjeta = value; }
+        }
+
+        public string TerminalTarjeta
+        {
+            get { return terminalTarjeta; }
+            set { terminalTarjeta = value; }
+        }
+
+        public decimal CargoTarjeta
+        {
+            get { return cargoTarjeta; }
+            set { cargoTarjeta = value; }
         }
 
         public int CreateUser
@@ -142,10 +149,12 @@ namespace EC_Admin
          
         #region Propiedades Venta Detallada
         private List<int> idP;
-        private List<decimal> cantidad;
+        private List<int> cantidad;
         private List<decimal> precio;
         private List<decimal> descuentoP;
         private List<Unidades> unidad;
+        private List<bool> paquete;
+        private List<int> promocion;
 
         public List<int> IDProductos
         {
@@ -153,7 +162,7 @@ namespace EC_Admin
             set { idP = value; }
         }
 
-        public List<decimal> Cantidad
+        public List<int> Cantidad
         {
             get { return cantidad; }
             set { cantidad = value; }
@@ -176,6 +185,19 @@ namespace EC_Admin
             get { return unidad; }
             set { unidad = value; }
         }
+
+        public List<bool> Paquete
+        {
+            get { return paquete; }
+            set { paquete = value; }
+        }
+
+        public List<int> Promocion
+        {
+            get { return promocion; }
+            set { promocion = value; }
+        }
+        
         #endregion
 
         /// <summary>
@@ -260,9 +282,10 @@ namespace EC_Admin
                     impuesto = (decimal)dr["impuesto"];
                     descuento = (decimal)dr["descuento"];
                     total = (decimal)dr["total"];
-                    factura = (bool)dr["factura"];
-                    folioFactura = dr["folio_factura"].ToString();
                     tipo = (TipoPago)Enum.Parse(typeof(TipoPago), dr["tipo_pago"].ToString());
+                    terminacionTarjeta = dr["terminacion_tarjeta"].ToString();
+                    terminalTarjeta = dr["terminal_tarjeta"].ToString();
+                    cargoTarjeta = (decimal)dr["cargo_tarjeta"];
                     createUser = (int)dr["create_user"];
                     createTime = (DateTime)dr["create_time"];
                     if (dr["update_user"] != DBNull.Value)
@@ -302,8 +325,8 @@ namespace EC_Admin
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "UPDATE venta SET id_cliente=?id_cliente, id_sucursal=?id_sucursal, id_vendedor=?id_vendedor, abierta=?abierta, subtotal=?subtotal, impuesto=?impuesto, " + 
-                    "descuento=?descuento, total=?total, factura=?factura, folio_factura=?folio_factura, tipo_pago=?tipo_pago, update_user=?update_user, update_time=NOW() WHERE id=?id";
+                sql.CommandText = "UPDATE venta SET id_cliente=?id_cliente, id_sucursal=?id_sucursal, id_vendedor=?id_vendedor, abierta=?abierta, subtotal=?subtotal, impuesto=?impuesto, descuento=?descuento, " +
+                    "total=?total, tipo_pago=?tipo_pago, terminacion_tarjeta=?terminacion_tarjeta, terminal_tarjeta=?terminal_tarjeta, cargo_tarjeta=?cargo_tarjeta, update_user=?update_user, update_time=NOW() WHERE id=?id";
                 sql.Parameters.AddWithValue("?id_cliente", idC);
                 sql.Parameters.AddWithValue("?id_sucursal", idS);
                 sql.Parameters.AddWithValue("?id_vendedor", idV);
@@ -312,9 +335,10 @@ namespace EC_Admin
                 sql.Parameters.AddWithValue("?impuesto", impuesto);
                 sql.Parameters.AddWithValue("?descuento", descuento);
                 sql.Parameters.AddWithValue("?total", total);
-                sql.Parameters.AddWithValue("?factura", factura);
-                sql.Parameters.AddWithValue("?folio_factura", folioFactura);
                 sql.Parameters.AddWithValue("?tipo_pago", tipo);
+                sql.Parameters.AddWithValue("?terminacion_tarjeta", terminacionTarjeta);
+                sql.Parameters.AddWithValue("?terminal_tarjeta", terminalTarjeta);
+                sql.Parameters.AddWithValue("?cargo_tarjeta", cargoTarjeta);
                 sql.Parameters.AddWithValue("?update_user", Usuario.IDUsuarioActual);
                 sql.Parameters.AddWithValue("?id", id);
                 ConexionBD.EjecutarConsulta(sql);
@@ -330,7 +354,7 @@ namespace EC_Admin
             }
         }
 
-        private static void CancelarVenta(int id)
+        public static void CancelarVenta(int id)
         {
             try
             {
@@ -360,10 +384,12 @@ namespace EC_Admin
         private void InicializarVentaDetallada()
         {
             idP = new List<int>();
-            cantidad = new List<decimal>();
+            cantidad = new List<int>();
             precio = new List<decimal>();
             descuentoP = new List<decimal>();
             unidad = new List<Unidades>();
+            paquete = new List<bool>();
+            promocion = new List<int>();
         }
 
         /// <summary>
@@ -376,30 +402,35 @@ namespace EC_Admin
                 MySqlCommand sql = new MySqlCommand();
                 for (int i = 0; i < idP.Count; i++)
                 {
-                    sql.CommandText = "INSERT INTO venta_detallada (id_venta, id_producto, cant, precio, descuento, unidad) " +
-                    "VALUES (?id_venta, ?id_producto, ?cant, ?precio, ?descuento, ?unidad) " +
-                    "ON DUPLICATE KEY UPDATE cant=?cant, precio=?precio, descuento=?descuento, unidad=?unidad;";
+                    sql.CommandText = "INSERT INTO venta_detallada (id_venta, id_producto, cant, precio, descuento, unidad, paquete, id_promocion) " +
+                    "VALUES (?id_venta, ?id_producto, ?cant, ?precio, ?descuento, ?unidad, ?paquete, ?promocion) " +
+                    "ON DUPLICATE KEY UPDATE cant=?cant, precio=?precio, descuento=?descuento, unidad=?unidad, paquete=?paquete, id_promocion=?promocion;";
                     sql.Parameters.AddWithValue("?id_venta", id);
                     sql.Parameters.AddWithValue("?id_producto", idP[i]);
                     sql.Parameters.AddWithValue("?cant", cantidad[i]);
                     sql.Parameters.AddWithValue("?precio", precio[i]);
                     sql.Parameters.AddWithValue("?descuento", descuentoP[i]);
                     sql.Parameters.AddWithValue("?unidad", unidad[i]);
+                    sql.Parameters.AddWithValue("?paquete", paquete[i]);
+                    sql.Parameters.AddWithValue("?promocion", promocion[i]);
                     ConexionBD.EjecutarConsulta(sql);
                     sql.Parameters.Clear();
                     if (this.abierta == false)
                     {
-                        Producto.CambiarCantidadInventario(idP[i], decimal.Negate(cantidad[i]));
+                        Inventario.CambiarCantidadInventario(idP[i], cantidad[i] * -1, Config.idSucursal);
+                        Promociones.CambiarExistencias(promocion[i], cantidad[i] * -1);
                     }
                 }
                 InicializarVentaDetallada();
             }
             catch (MySqlException ex)
             {
+                InicializarVentaDetallada();
                 throw ex;
             }
             catch (Exception ex)
             {
+                InicializarVentaDetallada();
                 throw ex;
             }
         }
@@ -419,10 +450,12 @@ namespace EC_Admin
                 foreach (DataRow dr in dt.Rows)
                 {
                     idP.Add((int)dr["id_producto"]);
-                    cantidad.Add((decimal)dr["cant"]);
+                    cantidad.Add((int)dr["cant"]);
                     precio.Add((decimal)dr["precio"]);
                     descuentoP.Add((decimal)dr["descuento"]);
                     unidad.Add((Unidades)Enum.Parse(typeof(Unidades), dr["unidad"].ToString()));
+                    paquete.Add((bool)dr["paquete"]);
+                    promocion.Add((int)dr["id_promocion"]);
                 }
             }
             catch (MySqlException ex)
@@ -443,7 +476,8 @@ namespace EC_Admin
                 v.RecuperarVenta();
                 for (int i = 0; i < v.IDProductos.Count; i++)
                 {
-                    Producto.CambiarCantidadInventario(v.IDProductos[i], decimal.Negate(v.Cantidad[i]));
+                    Inventario.CambiarCantidadInventario(v.IDProductos[i], v.Cantidad[i], Config.idSucursal);
+                    Promociones.CambiarExistencias(v.Promocion[i], v.Cantidad[i]);
                 }
             }
             catch (MySqlException ex)

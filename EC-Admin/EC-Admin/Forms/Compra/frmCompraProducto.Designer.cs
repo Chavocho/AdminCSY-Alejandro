@@ -87,14 +87,18 @@
             // 
             // nudCant
             // 
-            this.nudCant.DecimalPlaces = 2;
             this.nudCant.Font = new System.Drawing.Font("Corbel", 11F);
             this.nudCant.Location = new System.Drawing.Point(12, 420);
+            this.nudCant.Maximum = new decimal(new int[] {
+            -1530494977,
+            232830,
+            0,
+            0});
             this.nudCant.Minimum = new decimal(new int[] {
             1,
             0,
             0,
-            131072});
+            0});
             this.nudCant.Name = "nudCant";
             this.nudCant.Size = new System.Drawing.Size(120, 25);
             this.nudCant.TabIndex = 12;

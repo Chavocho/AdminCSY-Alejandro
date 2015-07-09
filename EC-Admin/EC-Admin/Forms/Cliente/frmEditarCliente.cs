@@ -248,96 +248,97 @@ namespace EC_Admin.Forms
             bool resultado = true;
             if (cboSucursal.SelectedIndex < 0)
             {
-                FuncionesGenerales.ColoresError(ref cboSucursal);
+                FuncionesGenerales.ColoresError(cboSucursal);
                 resultado = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref cboSucursal);
+                FuncionesGenerales.ColoresBien(cboSucursal);
             }
             if (txtNombre.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtNombre);
+                FuncionesGenerales.ColoresError(txtNombre);
                 resultado = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref txtNombre);
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtRFC.Text.Trim() != "")
             {
                 if (txtRFC.Text.Length < 12)
                 {
-                    FuncionesGenerales.ColoresError(ref txtRFC);
+                    FuncionesGenerales.ColoresError(txtRFC);
                     resultado = false;
                 }
                 else
                 {
-                    FuncionesGenerales.ColoresBien(ref txtRFC);
+                    FuncionesGenerales.ColoresBien(txtRFC);
                 }
             }
             if (txtCalle.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtCalle);
+                FuncionesGenerales.ColoresError(txtCalle);
                 resultado = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref txtCalle);
+                FuncionesGenerales.ColoresBien(txtCalle);
             }
             if (txtNumInt.Text.Trim() != "" && txtNumExt.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtNumExt);
+                FuncionesGenerales.ColoresError(txtNumExt);
                 resultado = false;
             }
             if (txtNumExt.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtNumExt);
+                FuncionesGenerales.ColoresError(txtNumExt);
                 resultado = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref txtNumExt);
+                FuncionesGenerales.ColoresBien(txtNumExt);
             }
             if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtTelefono01);
+                FuncionesGenerales.ColoresError(txtTelefono01);
                 resultado = false;
             }
             else
             {
                 if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() != "")
                 {
-                    FuncionesGenerales.ColoresError(ref txtTelefono01);
+                    FuncionesGenerales.ColoresError(txtTelefono01);
                     resultado = false;
                 }
                 else
                 {
-                    FuncionesGenerales.ColoresBien(ref txtTelefono01);
+                    FuncionesGenerales.ColoresBien(txtTelefono01);
                 }
             }
             if (txtCorreo.Text != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
-                    FuncionesGenerales.ColoresError(ref txtCorreo);
+                    FuncionesGenerales.ColoresError(txtCorreo);
+                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "No se reconoce el correo ingresado como uno válido", "Admin CSY");
                     resultado = false;
                 }
                 else
                 {
-                    FuncionesGenerales.ColoresBien(ref txtCorreo);
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
             if (cboTipoCredito.SelectedIndex == 1)
             {
                 if (txtLimiteCredito.Text.Trim() == "")
                 {
-                    FuncionesGenerales.ColoresError(ref txtLimiteCredito);
+                    FuncionesGenerales.ColoresError(txtLimiteCredito);
                     resultado = false;
                 }
                 else
                 {
-                    FuncionesGenerales.ColoresBien(ref txtLimiteCredito);
+                    FuncionesGenerales.ColoresBien(txtLimiteCredito);
                 }
             }
             return resultado;

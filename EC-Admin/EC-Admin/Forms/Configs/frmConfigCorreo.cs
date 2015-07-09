@@ -39,43 +39,44 @@ namespace EC_Admin.Forms.Configs
 
         private bool VerificarDatos()
         {
-            bool resultado = true;
+            bool res = true;
             if (txtCorreo.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtCorreo);
-                resultado = false;
+                FuncionesGenerales.ColoresError(txtCorreo); 
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "No se reconoce el correo ingresado como uno válido", "Admin CSY");
+                res = false;
             }
             else
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
-                    FuncionesGenerales.ColoresError(ref txtCorreo);
-                    resultado = false;
+                    FuncionesGenerales.ColoresError(txtCorreo);
+                    res = false;
                 }
                 else
                 {
-                    FuncionesGenerales.ColoresBien(ref txtCorreo);
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
             if (txtHost.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtHost);
-                resultado = false;
+                FuncionesGenerales.ColoresError(txtHost);
+                res = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref txtHost);
+                FuncionesGenerales.ColoresBien(txtHost);
             }
             if (txtPuerto.Text.Trim() == "")
             {
-                FuncionesGenerales.ColoresError(ref txtPuerto);
-                resultado = false;
+                FuncionesGenerales.ColoresError(txtPuerto);
+                res = false;
             }
             else
             {
-                FuncionesGenerales.ColoresBien(ref txtPuerto);
+                FuncionesGenerales.ColoresBien(txtPuerto);
             }
-            return resultado;
+            return res;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -88,7 +89,7 @@ namespace EC_Admin.Forms.Configs
             }
             else
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Error, "Los campos en color rojo son obligatorios", "Admin CSY");
+                FuncionesGenerales.Mensaje(this, Mensajes.Error, "Los campos en color rojo son obligatorios o tienen errores.", "Admin CSY");
             }
         }
 

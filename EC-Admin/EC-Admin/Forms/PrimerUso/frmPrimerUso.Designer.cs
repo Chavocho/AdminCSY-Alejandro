@@ -35,6 +35,7 @@
             this.lblESucursal = new System.Windows.Forms.Label();
             this.lblCerrar = new System.Windows.Forms.Label();
             this.lblETerminamos = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // pnlForms
@@ -121,12 +122,25 @@
             this.lblETerminamos.TabIndex = 4;
             this.lblETerminamos.Text = "Terminamos";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Corbel", 11F);
+            this.label1.Location = new System.Drawing.Point(466, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 18);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
+            this.label1.Visible = false;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
             // frmPrimerUso
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(813, 730);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblETerminamos);
             this.Controls.Add(this.lblCerrar);
             this.Controls.Add(this.lblEInicio);
@@ -154,5 +168,6 @@
         private System.Windows.Forms.Label lblESucursal;
         private System.Windows.Forms.Label lblCerrar;
         private System.Windows.Forms.Label lblETerminamos;
+        private System.Windows.Forms.Label label1;
     }
 }

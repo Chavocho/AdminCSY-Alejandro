@@ -1,0 +1,14 @@
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\bin\Release\ControlesUsuario.exe.config
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\bin\Release\ControlesUsuario.exe
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\bin\Release\ControlesUsuario.pdb
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\MainWindow.baml
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ProgressBar.baml
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\MainWindow.g.cs
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ProgressBar.g.cs
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\App.g.cs
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario_MarkupCompile.cache
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario.g.resources
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario.Properties.Resources.resources
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario.csproj.GenerateResource.Cache
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario.exe
+C:\Users\chava\Documents\GitHub\AdminCSY-Medrano\EC-Admin\ControlesUsuario\obj\Release\ControlesUsuario.pdb

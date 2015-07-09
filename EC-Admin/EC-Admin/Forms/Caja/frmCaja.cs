@@ -53,7 +53,7 @@ namespace EC_Admin.Forms
             c = new CerrarFrmEspera(Cerrar);
             try
             {
-                string sql = "SELECT id, efectivo, voucher, descripcion, tipo_movimiento, create_time FROM caja WHERE descripcion LIKE '%" + p + "%'";
+                string sql = "SELECT id, efectivo, voucher, descripcion, tipo_movimiento, create_time FROM caja WHERE descripcion LIKE '%" + p + "%' AND id_sucursal='" + Config.idSucursal + "'";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)
@@ -74,7 +74,7 @@ namespace EC_Admin.Forms
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT id, efectivo, voucher, descripcion, tipo_movimiento, create_time FROM caja WHERE (create_time BETWEEN ?fechaIni AND ?fechaFin)";
+                sql.CommandText = "SELECT id, efectivo, voucher, descripcion, tipo_movimiento, create_time FROM caja WHERE (create_time BETWEEN ?fechaIni AND ?fechaFin) AND id_sucursal='" + Config.idSucursal + "'";
                 sql.Parameters.AddWithValue("?fechaIni", fechaIni.ToString("yyyy-MM-dd") + " 00:00:00");
                 sql.Parameters.AddWithValue("?fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 23:59:59");
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
@@ -131,8 +131,8 @@ namespace EC_Admin.Forms
             }
             lblTotEfeMos.Text = efe.ToString("C2");
             lblTotVouMos.Text = vou.ToString("C2");
-            lblTotEfeCaj.Text = Caja.TotalEfectivo.ToString();
-            lblTotVouCaj.Text = Caja.TotalVouchers.ToString();
+            lblTotEfeCaj.Text = Caja.TotalEfectivo.ToString("C2");
+            lblTotVouCaj.Text = Caja.TotalVouchers.ToString("C2");
         }
 
         private void dtpFechas_ValueChanged(object sender, EventArgs e)
@@ -220,6 +220,7 @@ namespace EC_Admin.Forms
             {
                 btnAbrirCerrar.Text = "Cerrar caja";
             }
+            CalcularTotales();
         }
 
         private void bgwBusqueda_DoWork(object sender, DoWorkEventArgs e)
@@ -250,6 +251,29 @@ namespace EC_Admin.Forms
         private void btnCortes_Click(object sender, EventArgs e)
         {
             (new frmCorteCaja()).ShowDialog(this);
+        }
+
+        private void frmCaja_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!e.Alt)
+            {
+                if (e.KeyCode == Keys.F1)
+                {
+                    btnAbrirCerrar.PerformClick();
+                }
+                else if (e.KeyCode == Keys.F2)
+                {
+                    btnEntrada.PerformClick();
+                }
+                else if (e.KeyCode == Keys.F3)
+                {
+                    btnSalida.PerformClick();
+                }
+                else if (e.KeyCode == Keys.F4)
+                {
+                    btnCortes.PerformClick();
+                }
+            }
         }
     }
 }

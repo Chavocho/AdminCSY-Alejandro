@@ -34,7 +34,7 @@ namespace EC_Admin.Forms
         {
             try
             {
-                string sql = "SELECT id, nombre, codigo, costo, cant, unidad FROM producto WHERE nombre LIKE '%" + p + "%' OR codigo='" + p + "'";
+                string sql = "SELECT p.id, p.nombre, p.codigo, p.costo, i.cant, p.unidad FROM producto AS p INNER JOIN inventario AS i ON (p.id=i.id_producto) WHERE p.nombre LIKE '%" + p + "%' OR p.codigo='" + p + "' AND id_sucursal='" + Config.idSucursal + "'";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)
@@ -112,7 +112,7 @@ namespace EC_Admin.Forms
                 decimal.TryParse(txtDescuento.Text, out desc);
                 Unidades u = (Unidades)Enum.Parse(typeof(Unidades), dgvProductos[5, i].Value.ToString());
 
-                frm.AgregarProducto(id, dgvProductos[2, i].Value.ToString(), dgvProductos[1, i].Value.ToString(), (decimal)dgvProductos[3, i].Value, nudCant.Value, desc, u);
+                frm.AgregarProducto(id, dgvProductos[2, i].Value.ToString(), dgvProductos[1, i].Value.ToString(), (decimal)dgvProductos[3, i].Value, (int)nudCant.Value, desc, u);
                 this.Close();
             }
         }

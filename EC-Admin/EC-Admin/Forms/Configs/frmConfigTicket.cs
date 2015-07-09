@@ -32,7 +32,7 @@ namespace EC_Admin.Forms
         }
         #endregion
 
-        string impresora;
+        string impresora, impresoraTickets;
 
         public frmConfigTicket()
         {
@@ -55,10 +55,25 @@ namespace EC_Admin.Forms
                 txtLineaInferior01.Text = ConfiguracionXML.LeerConfiguración("ticket", "lineaInf01");
                 txtLineaInferior02.Text = ConfiguracionXML.LeerConfiguración("ticket", "lineaInf02");
                 txtLineaInferior03.Text = ConfiguracionXML.LeerConfiguración("ticket", "lineaInf03");
-
                 for (int i = 0; i < cboImpresoras.Items.Count; i++)
+                {
                     if (cboImpresoras.Items[i].ToString() == ConfiguracionXML.LeerConfiguración("ticket", "impresora"))
+                    {
                         cboImpresoras.SelectedIndex = i;
+                        break;
+                    }
+                }
+                if (ConfiguracionXML.ExisteConfiguracion("ticket", "impresora_tickets"))
+                {
+                    for (int i = 0; i < cboImpresoraCodigo.Items.Count; i++)
+                    {
+                        if (cboImpresoraCodigo.Items[i].ToString() == ConfiguracionXML.LeerConfiguración("ticket", "impresora_tickets"))
+                        {
+                            cboImpresoraCodigo.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                }
 
                 chbImprimir.Checked = bool.Parse(ConfiguracionXML.LeerConfiguración("ticket", "imprimir"));
                 chbPreguntar.Checked = bool.Parse(ConfiguracionXML.LeerConfiguración("ticket", "preguntar"));
@@ -84,6 +99,7 @@ namespace EC_Admin.Forms
                 ConfiguracionXML.GuardarConfiguracion("ticket", "lineaInf02", txtLineaInferior02.Text);
                 ConfiguracionXML.GuardarConfiguracion("ticket", "lineaInf03", txtLineaInferior03.Text);
                 ConfiguracionXML.GuardarConfiguracion("ticket", "impresora", impresora);
+                ConfiguracionXML.GuardarConfiguracion("ticket", "impresora_tickets", impresoraTickets);
                 ConfiguracionXML.GuardarConfiguracion("ticket", "imprimir", chbImprimir.Checked.ToString());
                 ConfiguracionXML.GuardarConfiguracion("ticket", "preguntar", chbPreguntar.Checked.ToString());
             }
@@ -95,8 +111,11 @@ namespace EC_Admin.Forms
 
         private void frmConfigTicket_Load(object sender, EventArgs e)
         {
-            foreach (String impresora in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-                cboImpresoras.Items.Add(impresora);
+            foreach (String imp in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            {
+                cboImpresoras.Items.Add(imp);
+                cboImpresoraCodigo.Items.Add(imp);
+            }
             CargarDatos();
         }
 
@@ -105,6 +124,11 @@ namespace EC_Admin.Forms
             impresora = cboImpresoras.Items[cboImpresoras.SelectedIndex].ToString();
         }
 
+        private void cboImpresoraCodigo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            impresoraTickets = cboImpresoraCodigo.Items[cboImpresoraCodigo.SelectedIndex].ToString();
+        }
+    
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (cboImpresoras.SelectedIndex < 0)
@@ -116,5 +140,5 @@ namespace EC_Admin.Forms
             FuncionesGenerales.Mensaje(this, Mensajes.Exito, "¡Se ha guardado correctamente la información!", "Admin CSY");
             this.Close();
         }
-    }
+}
 }

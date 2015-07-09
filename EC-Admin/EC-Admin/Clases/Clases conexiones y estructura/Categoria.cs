@@ -46,6 +46,9 @@ namespace EC_Admin
         #endregion
 
         #region Cantidad
+        /// <summary>
+        /// Método que actualiza la cantidad de categorias
+        /// </summary>
         private static void Cant()
         {
             try
@@ -71,16 +74,26 @@ namespace EC_Admin
         }
         #endregion
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Categoria
+        /// </summary>
         public Categoria()
         {
 
         }
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Categoria con el ID asociado
+        /// </summary>
+        /// <param name="id">ID de la categoría</param>
         public Categoria(int id)
         {
             this.ID = id;
         }
 
+        /// <summary>
+        /// Método que obtiene los datos de la base de datos y los guarda en las propiedades
+        /// </summary>
         public void ObtenerDatos()
         {
             try
@@ -105,6 +118,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que inserta los datos de las propiedades en la base de datos
+        /// </summary>
         public void Insertar()
         {
             try
@@ -126,6 +142,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que modifica de la base de datos con los datos de las propiedades
+        /// </summary>
         public void Editar()
         {
             try

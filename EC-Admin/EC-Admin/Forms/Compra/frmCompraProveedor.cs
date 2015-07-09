@@ -34,7 +34,7 @@ namespace EC_Admin.Forms
         {
             try
             {
-                string sql = "SELECT id, nombre, razon_social, telefono1, telefono2, email, lada1, lada2 FROM proveedor WHERE nombre LIKE '%" + p + "%' OR razon_social LIKE '%" + p + "%'";
+                string sql = "SELECT id, nombre, razon_social, telefono1, telefono2, email, lada1, lada2 FROM proveedor WHERE nombre LIKE '%" + p + "%' OR razon_social LIKE '%" + p + "%' AND id_sucursal='" + Config.idSucursal + "'";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)

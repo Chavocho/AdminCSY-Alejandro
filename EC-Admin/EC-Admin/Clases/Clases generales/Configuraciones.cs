@@ -10,6 +10,8 @@ namespace System
     public class Config
     {
         public static decimal iva = 0M;
+        public static int cantMedioMayoreo = 0;
+        public static int cantMayoreo = 0;
 
         #region Base de datos
         public static string baseDatos = "", servidor = "", usuario = "", pass = "";

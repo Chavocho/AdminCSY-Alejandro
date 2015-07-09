@@ -199,7 +199,7 @@ namespace EC_Admin.Forms
                 {
                     c.IDProductos.Add((int)dr.Cells[0].Value);
                     c.Precio.Add((decimal)dr.Cells[3].Value);
-                    c.Cantidad.Add((decimal)dr.Cells[4].Value);
+                    c.Cantidad.Add((int)dr.Cells[4].Value);
                     c.DescuentoProducto.Add((decimal)dr.Cells[5].Value);
                     c.Unidad.Add((Unidades)Enum.Parse(typeof(Unidades), dr.Cells[6].Value.ToString()));
                 }
@@ -337,7 +337,7 @@ namespace EC_Admin.Forms
             return precio;
         }
 
-        public void ModificarProducto(decimal cant, decimal desc)
+        public void ModificarProducto(int cant, decimal desc)
         {
             dgvProductos[4, dgvProductos.CurrentRow.Index].Value = cant;
             dgvProductos[5, dgvProductos.CurrentRow.Index].Value = desc;
@@ -623,7 +623,7 @@ namespace EC_Admin.Forms
         private void dgvProductos_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (dgvProductos.CurrentRow != null)
-                (new frmDatosVentaProducto(this, dgvProductos[2, dgvProductos.CurrentRow.Index].Value.ToString(), (decimal)dgvProductos[4, dgvProductos.CurrentRow.Index].Value, ((decimal)dgvProductos[5, dgvProductos.CurrentRow.Index].Value) * 100)).ShowDialog(this);
+                (new frmDatosVentaProducto(this, dgvProductos[2, dgvProductos.CurrentRow.Index].Value.ToString(), (int)dgvProductos[4, dgvProductos.CurrentRow.Index].Value, ((decimal)dgvProductos[5, dgvProductos.CurrentRow.Index].Value) * 100)).ShowDialog(this);
         }
 
         private void dgvProductos_RowEnter(object sender, DataGridViewCellEventArgs e)

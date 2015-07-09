@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using MySql.Data.MySqlClient;
 
 namespace EC_Admin
@@ -70,16 +67,18 @@ namespace EC_Admin
         public static int EjecutarConsulta(string consulta)
         {
             int id = 0;
-            conexion = null;
             try
             {
-                AbrirConexion();
-                MySqlCommand sql = new MySqlCommand();
-                sql.Connection = conexion;
-                sql.CommandText = consulta;
-                sql.CommandType = CommandType.Text;
-                sql.ExecuteNonQuery();
-                id = (int)sql.LastInsertedId;
+                using (conexion)
+                {
+                    AbrirConexion();
+                    MySqlCommand sql = new MySqlCommand();
+                    sql.Connection = conexion;
+                    sql.CommandText = consulta;
+                    sql.CommandType = CommandType.Text;
+                    sql.ExecuteNonQuery();
+                    id = (int)sql.LastInsertedId;
+                }
             }
             catch (MySqlException ex)
             {
@@ -106,14 +105,16 @@ namespace EC_Admin
         public static int EjecutarConsulta(MySqlCommand comando)
         {
             int id = 0;
-            conexion = null;
             try
             {
-                AbrirConexion();
-                comando.Connection = conexion;
-                comando.CommandType = CommandType.Text;
-                comando.ExecuteReader();
-                id = (int)comando.LastInsertedId;
+                using (conexion)
+                {
+                    AbrirConexion();
+                    comando.Connection = conexion;
+                    comando.CommandType = CommandType.Text;
+                    comando.ExecuteNonQuery();
+                    id = (int)comando.LastInsertedId;
+                }
             }
             catch (MySqlException ex)
             {
@@ -140,17 +141,21 @@ namespace EC_Admin
         public static DataTable EjecutarConsultaSelect(string consulta)
         {
             DataTable dt = new DataTable();
-            conexion = null;
             try
             {
                 AbrirConexion();
-                MySqlCommand sql = new MySqlCommand();
-                sql.Connection = conexion;
-                sql.CommandText = consulta;
-                sql.CommandType = CommandType.Text;
-                IDataReader res = sql.ExecuteReader();
-                dt.Load(res);
-                res.Close();
+                using (conexion)
+                {
+                    MySqlCommand sql = new MySqlCommand();
+                    sql.Connection = conexion;
+                    sql.CommandText = consulta;
+                    sql.CommandType = CommandType.Text;
+                    using (MySqlDataReader res = sql.ExecuteReader())
+                    {
+                        dt.Load(res);
+                        res.Close();
+                    }
+                }
             }
             catch (MySqlException ex)
             {
@@ -177,15 +182,19 @@ namespace EC_Admin
         public static DataTable EjecutarConsultaSelect(MySqlCommand comando)
         {
             DataTable dt = new DataTable();
-            conexion = null;
             try
             {
-                AbrirConexion();
-                comando.Connection = conexion;
-                comando.CommandType = CommandType.Text;
-                IDataReader res = comando.ExecuteReader();
-                dt.Load(res);
-                res.Close();
+                using (conexion)
+                {
+                    AbrirConexion();
+                    comando.Connection = conexion;
+                    comando.CommandType = CommandType.Text;
+                    using (MySqlDataReader res = comando.ExecuteReader())
+                    {
+                        dt.Load(res);
+                        res.Close();
+                    }
+                }
             }
             catch (MySqlException ex)
             {

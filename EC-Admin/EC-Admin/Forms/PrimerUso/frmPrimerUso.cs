@@ -211,5 +211,12 @@ namespace EC_Admin
                 return;
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            EC_Admin.Properties.Settings.Default.PrimerUso = false;
+            EC_Admin.Properties.Settings.Default.Save();
+        }
+
     }
 }

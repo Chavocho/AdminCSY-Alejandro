@@ -149,7 +149,7 @@ namespace EC_Admin
 
         #region Propiedades Compra Detallada
         private List<int> idPs;
-        private List<decimal> cantidad;
+        private List<int> cantidad;
         private List<decimal> precio;
         private List<decimal> descuentoP;
         private List<Unidades> unidad;
@@ -160,7 +160,7 @@ namespace EC_Admin
             set { idPs = value; }
         }
 
-        public List<decimal> Cantidad
+        public List<int> Cantidad
         {
             get { return cantidad; }
             set { cantidad = value; }
@@ -185,11 +185,18 @@ namespace EC_Admin
         }
         #endregion
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Compra
+        /// </summary>
         public Compra()
         {
             InicializarCompraDetallada();
         }
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Compra con el ID asociado
+        /// </summary>
+        /// <param name="id">ID de la Compra</param>
         public Compra(int id)
         {
             InicializarCompraDetallada();
@@ -197,7 +204,9 @@ namespace EC_Admin
         }
 
         #region Compra
-
+        /// <summary>
+        /// Método que obtiene los datos de una compra y los guarda en sus propiedades
+        /// </summary>
         public void ObtenerDatos()
         {
             try
@@ -252,6 +261,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que inserta los datos de las propiedades en la base de datos
+        /// </summary>
         public void Insertar()
         {
             try
@@ -286,6 +298,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que registra el movimiento de la compra en Caja
+        /// </summary>
         private void RegistrarMovimientoIngreso()
         {
             try
@@ -308,6 +323,12 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que registra el movimiento de cancelación en caja
+        /// </summary>
+        /// <param name="id">ID de la compra</param>
+        /// <param name="idSucursal">ID de la sucursal</param>
+        /// <param name="total">Total de la compra</param>
         private static void RegistrarMovimientoCancelacion(int id, int idSucursal, decimal total)
         {
             try
@@ -330,7 +351,11 @@ namespace EC_Admin
             }
         }
 
-        private static void CancelarCompra(int id)
+        /// <summary>
+        /// Método que cancela una compra y resta los productos de inventario
+        /// </summary>
+        /// <param name="id"></param>
+        public static void CancelarCompra(int id)
         {
             try
             {
@@ -354,15 +379,21 @@ namespace EC_Admin
         #endregion
 
         #region Compra detallada
+        /// <summary>
+        /// Método que inicializa las propiedades de la compra detallada
+        /// </summary>
         private void InicializarCompraDetallada()
         {
             idPs = new List<int>();
-            cantidad = new List<decimal>();
+            cantidad = new List<int>();
             unidad = new List<Unidades>();
             precio = new List<decimal>();
             descuentoP = new List<decimal>();
         }
 
+        /// <summary>
+        /// Método que obtiene los datos de la compra detallada
+        /// </summary>
         private void ObtenerDatosDetallada()
         {
             try
@@ -374,7 +405,7 @@ namespace EC_Admin
                 foreach (DataRow dr in dt.Rows)
                 {
                     idPs.Add((int)dr["id_producto"]);
-                    cantidad.Add((decimal)dr["cant"]);
+                    cantidad.Add((int)dr["cant"]);
                     unidad.Add((Unidades)Enum.Parse(typeof(Unidades), dr["unidad"].ToString()));
                     precio.Add((decimal)dr["precio"]);
                     descuentoP.Add((decimal)dr["descuento"]);
@@ -382,14 +413,19 @@ namespace EC_Admin
             }
             catch (MySqlException ex)
             {
+                InicializarCompraDetallada();
                 throw ex;
             }
             catch (Exception ex)
             {
+                InicializarCompraDetallada();
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Método que unserta los datos de la compra detallada en la base de datos
+        /// </summary>
         private void InsertarDetallada()
         {
             try
@@ -407,7 +443,7 @@ namespace EC_Admin
                     sql.Parameters.AddWithValue("?descuento", descuentoP[i]);
                     ConexionBD.EjecutarConsulta(sql);
                     sql.Parameters.Clear();
-                    Producto.CambiarCantidadInventario(idPs[i], cantidad[i]);
+                    Inventario.CambiarCantidadInventario(idPs[i], cantidad[i], Config.idSucursal);
                 }
             }
             catch (MySqlException ex)
@@ -428,7 +464,7 @@ namespace EC_Admin
                 c.ObtenerDatos();
                 for (int i = 0; i < c.IDProductos.Count; i++)
                 {
-                    Producto.CambiarCantidadInventario(c.IDProductos[i], decimal.Negate(c.Cantidad[i]));
+                    Inventario.CambiarCantidadInventario(c.IDProductos[i], c.Cantidad[i] * -1, Config.idSucursal);
                 }
             }
             catch (MySqlException ex)

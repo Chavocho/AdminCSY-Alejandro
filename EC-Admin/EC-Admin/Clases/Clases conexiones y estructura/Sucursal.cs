@@ -27,6 +27,7 @@ namespace EC_Admin
         private System.Drawing.Image logotipo;
         private string web;
         private string rfc;
+        private bool asignada;
         private int createUser;
         private DateTime createTime;
         private int updateUser;
@@ -128,6 +129,12 @@ namespace EC_Admin
             set { rfc = value; }
         }
 
+        public bool Asignada
+        {
+            get { return asignada; }
+            set { asignada = value; }
+        }
+
         public int CreateUser
         {
             get { return createUser; }
@@ -151,7 +158,12 @@ namespace EC_Admin
 
         public static int Cantidad
         {
-            get { return cant; }
+            get
+            {
+                if (cant < 0)
+                    Cant();
+                return cant;
+            }
         }
         
         #endregion
@@ -269,6 +281,7 @@ namespace EC_Admin
                 sql.Parameters.AddWithValue("?rfc", rfc);
                 sql.Parameters.AddWithValue("?create_user", Usuario.IDUsuarioActual);
                 this.ID = ConexionBD.EjecutarConsulta(sql);
+                Cant();
             }
             catch (MySqlException ex)
             {
@@ -329,6 +342,7 @@ namespace EC_Admin
                 sql.Parameters.AddWithValue("?estado", estado);
                 sql.Parameters.AddWithValue("?id", id);
                 ConexionBD.EjecutarConsulta(sql);
+                Cant();
             }
             catch (MySqlException ex)
             {
@@ -363,6 +377,51 @@ namespace EC_Admin
                 throw ex;
             }
             return nombre;
+        }
+
+        public static void AsignarSucursal(int id, bool asignar)
+        {
+            try
+            {
+                MySqlCommand sql = new MySqlCommand();
+                sql.CommandText = "UPDATE sucursal SET asignada=?asignada WHERE id=?id";
+                sql.Parameters.AddWithValue("?asignada", asignar);
+                sql.Parameters.AddWithValue("?id", id);
+                ConexionBD.EjecutarConsulta(sql);
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool EsSucursalAsignada(int id)
+        {
+            bool asignada = false;
+            try
+            {
+                MySqlCommand sql = new MySqlCommand();
+                sql.CommandText = "SELECT asignada FROM sucursal WHERE id=?id";
+                sql.Parameters.AddWithValue("?id", id);
+                DataTable dt = ConexionBD.EjecutarConsultaSelect(sql);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    asignada = (bool)dr["asignada"];
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return asignada;
         }
 
         #region Direcciones

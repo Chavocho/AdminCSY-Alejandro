@@ -169,8 +169,6 @@ namespace EC_Admin
                 return bimg;
             try
             {
-                if (img.Width > 1280 && img.Height > 800)
-                    img = RedimensionarImagen(img, (img.Width / 50), (img.Height / 50));
                 MemoryStream m = new MemoryStream();
                 img.Save(m, System.Drawing.Imaging.ImageFormat.Jpeg);
                 bimg = m.ToArray();
@@ -318,6 +316,7 @@ namespace EC_Admin
         /// <param name="ex">Excepción que ocurrió</param>
         public static System.Windows.Forms.DialogResult Mensaje(IWin32Window frm, Mensajes m, string mensaje, string titulo, Exception ex = null)
         {
+            //return (new frmMensaje(m, mensaje, titulo)).ShowDialog(frm);
             if (m != Mensajes.Error)
                 return (new frmMensaje(m, mensaje, titulo)).ShowDialog(frm);
             else
@@ -479,28 +478,36 @@ namespace EC_Admin
             return false;
         }
 
-        public static void ColoresError(ref TextBox txt)
+        public static void ColoresError(Control ctr)
         {
-            txt.BackColor = Colores.Error;
-            txt.ForeColor = Colores.Claro;
+            ctr.BackColor = Colores.Error;
+            ctr.ForeColor = Colores.Claro;
         }
 
-        public static void ColoresBien(ref TextBox txt)
+        public static void ColoresBien(Control ctr)
         {
-            txt.BackColor = Colores.Claro;
-            txt.ForeColor = Colores.Obscuro;
+            if (ctr.GetType() == typeof(TextBox) || ctr.GetType() == typeof(Label))
+            {
+                ctr.BackColor = Colores.Claro;
+                ctr.ForeColor = Colores.Obscuro;
+            }
+            else if (ctr.GetType() == typeof(ComboBox))
+            {
+                ctr.BackColor = Colores.ClaroObscuro;
+                ctr.ForeColor = Colores.Obscuro;
+            }
         }
 
-        public static void ColoresError(ref ComboBox txt)
+        public static void DataGridViewUp(DataGridView dgv)
         {
-            txt.BackColor = Colores.Error;
-            txt.ForeColor = Colores.Claro;
+            if (dgv.CurrentRow.Index > 0)
+                dgv[1, dgv.CurrentRow.Index - 1].Selected = true;
         }
 
-        public static void ColoresBien(ref ComboBox txt)
+        public static void DataGridViewDown(DataGridView dgv)
         {
-            txt.BackColor = Colores.ClaroObscuro;
-            txt.ForeColor = Colores.Obscuro;
+            if (dgv.CurrentRow.Index < dgv.RowCount - 1)
+                dgv[1, dgv.CurrentRow.Index + 1].Selected = true;
         }
 
         #region Siempre Encima

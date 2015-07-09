@@ -36,6 +36,7 @@ namespace EC_Admin
 
         #region Propiedades
         private int id;
+        private int idSucusal;
         private string userName;
         private string contraseña;
         private string nombre;
@@ -68,6 +69,12 @@ namespace EC_Admin
         {
             get { return id; }
             set { id = value; }
+        }
+
+        public int IDSucusal
+        {
+            get { return idSucusal; }
+            set { idSucusal = value; }
         }
 
         /// <summary>
@@ -462,7 +469,7 @@ namespace EC_Admin
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT id, nivel, nombre, apellidos, imagen FROM usuario WHERE username=?userName AND pass=?pass AND eliminado=0";
+                sql.CommandText = "SELECT id, nivel, nombre, apellidos, imagen FROM usuario WHERE username=?userName AND pass=?pass AND eliminado=0 AND sucursal_id='" + Config.idSucursal + "'";
                 sql.Parameters.AddWithValue("?userName", nomUsu);
                 sql.Parameters.AddWithValue("?pass", Criptografia.Cifrar(pass));
                 DataTable dt = ConexionBD.EjecutarConsultaSelect(sql);
@@ -576,8 +583,9 @@ namespace EC_Admin
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "INSERT INTO usuario (username, pass, nivel, nombre, apellidos, email, imagen, huella, create_user, create_time) " +
-                    "VALUES (?username, ?pass, ?nivel, ?nombre, ?apellidos, ?email, ?imagen, ?huella, ?create_user, NOW())";
+                sql.CommandText = "INSERT INTO usuario (sucursal_id, username, pass, nivel, nombre, apellidos, email, imagen, huella, create_user, create_time) " +
+                    "VALUES (?sucursal_id, ?username, ?pass, ?nivel, ?nombre, ?apellidos, ?email, ?imagen, ?huella, ?create_user, NOW())";
+                sql.Parameters.AddWithValue("?sucursal_id", idSucusal);
                 sql.Parameters.AddWithValue("?username", UserName);
                 sql.Parameters.AddWithValue("?pass", Criptografia.Cifrar(Contraseña));
                 sql.Parameters.AddWithValue("?nivel", NivelUsuario);

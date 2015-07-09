@@ -131,10 +131,20 @@ namespace EC_Admin
                         xml.Load(ruta);
                         XmlNode nodoPrimario = xml.DocumentElement;
                         foreach (XmlNode nodo1 in nodoPrimario)
+                        {
                             if (nodo1.Name == nodoPrincipal)
+                            {
                                 foreach (XmlNode nodo2 in nodo1)
+                                {
                                     if (nodo2.Name == nodoSecundario)
+                                    {
                                         nodo2.InnerText = Criptografia.Cifrar(valor);
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
                         xml.Save(ruta);
                     }
                     else
@@ -143,12 +153,15 @@ namespace EC_Admin
                         xml.Load(ruta);
                         XmlNode nodoPrimario = xml.DocumentElement;
                         foreach (XmlNode nodo1 in nodoPrimario)
+                        {
                             if (nodo1.Name == nodoPrincipal)
                             {
                                 XmlNode nodo2 = xml.CreateNode(XmlNodeType.Element, nodoSecundario, null);
                                 nodo2.InnerText = Criptografia.Cifrar(valor);
                                 nodo1.AppendChild(nodo2);
+                                break;
                             }
+                        }
                         xml.Save(ruta);
                     }
                 }

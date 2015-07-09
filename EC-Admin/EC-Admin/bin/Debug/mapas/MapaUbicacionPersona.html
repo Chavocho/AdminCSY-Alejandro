@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Ubicación en mapa</title>
+</head>
+<body onload="inicializarMapa()">
+	<h4><p class="text-info">Para obtener una ubicación más exacta es necesario ingresar datos especificos en la dirección</p></h4>
+	<div id="ubicacion_persona" style="width: 850px; height: 550px;"></div>
+	
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://maps.google.com/maps?file=api&v=3&key=AIzaSyBAsxp5MZW-eJlJryQnekIxNZHAYU0BhU4"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript">
+		var geocoder = new google.maps.Geocoder();
+		var mapa; 
+		
+		/*
+		*
+		*
+		*/	
+		function agregarMarca(localizacion)
+		{
+			marca_mapa = new google.maps.Marker({
+				position: localizacion,
+				map: mapa
+			});
+		}
+		
+		/*
+		*
+		*
+		*/	
+		function convertirDireccion(direccion)
+		{
+			var request ={address: direccion}
+						
+			geocoder.geocode(request, function(results, status) 
+			{	
+				if (status == google.maps.GeocoderStatus.OK) 
+				{
+					//Centrar el mapa
+					mapa.setCenter(results[0].geometry.location);	
+					agregarMarca(results[0].geometry.location);
+				}
+			});
+		}
+		
+		/*
+		* 
+		*
+		*/
+		function inicializarMapa() 
+		{
+				
+			var opcionesMapa = {
+				zoom: 13,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+				};		
+			mapa = new google.maps.Map(document.getElementById('ubicacion_persona'), opcionesMapa);
+			convertirDireccion("La misma  #123");
+		}
+	</script>
+		
+</body>
+</html>

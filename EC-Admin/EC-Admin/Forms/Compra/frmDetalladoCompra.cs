@@ -59,7 +59,10 @@ namespace EC_Admin.Forms
                 {
                     lblRemision.Text = "Si";
                     lblFactura.Text = "No";
-                    lblFolioRemision.Text = c.FolioRemision;
+                    if (c.FolioRemision != "")
+                    {
+                        lblFolioRemision.Text = c.FolioRemision;
+                    }
                 }
                 else if (c.Factura)
                 {
@@ -95,12 +98,14 @@ namespace EC_Admin.Forms
                 int saltoPeque = 25;
                 int saltoGrande = 115;
                 int posPcb = 10;
-                int posNom = 120;
+                int posCod = 120;
+                int posNom = 250;
                 int posCan = (pnlDetallada.Width / 3) * 2 - 100;
                 int posCos = (pnlDetallada.Width / 3) * 2;
                 int posDes = (pnlDetallada.Width / 3) * 2 + 100;
                 int posUni = (pnlDetallada.Width / 3) * 2 + 230;
 
+                Label lblECodProd = new Label();
                 Label lblENombreProd = new Label();
                 Label lblECantProd = new Label();
                 Label lblECostoProd = new Label();
@@ -108,11 +113,13 @@ namespace EC_Admin.Forms
                 Label lblEUnidadProd = new Label();
 
                 //Añadimos los labels de titulo
+                LabelTitulo(ref lblECodProd, "Código", posCod, y);
                 LabelTitulo(ref lblENombreProd, "Nombre", posNom, y);
                 LabelTitulo(ref lblECantProd, "Cantidad", posCan, y);
                 LabelTitulo(ref lblECostoProd, "Costo", posCos, y);
                 LabelTitulo(ref lblEDescuentoProd, "Descuento", posDes, y);
                 LabelTitulo(ref lblEUnidadProd, "Unidad", posUni, y);
+                pnlDetallada.Controls.Add(lblECodProd);
                 pnlDetallada.Controls.Add(lblENombreProd);
                 pnlDetallada.Controls.Add(lblECantProd);
                 pnlDetallada.Controls.Add(lblECostoProd);
@@ -120,6 +127,7 @@ namespace EC_Admin.Forms
                 pnlDetallada.Controls.Add(lblEUnidadProd);
                 y += saltoPeque;
 
+                Label lblCodProd;
                 Label lblNombreProd;
                 Label lblCantProd;
                 Label lblCostoProd;
@@ -128,6 +136,7 @@ namespace EC_Admin.Forms
                 PictureBox pcbImagen;
                 for (int i = 0; i < c.IDProductos.Count; i++)
                 {
+                    lblCodProd = new Label();
                     lblNombreProd = new Label();
                     lblCantProd = new Label();
                     lblCostoProd = new Label();
@@ -136,9 +145,10 @@ namespace EC_Admin.Forms
                     pcbImagen = new PictureBox();
 
                     Image img = Producto.Imagen01Producto(c.IDProductos[i]);
-                    string nomProd = Producto.NombreProducto(c.IDProductos[i]); 
+                    string codProd = Producto.CodigoProducto(c.IDProductos[i]), nomProd = Producto.NombreProducto(c.IDProductos[i]);
+                    LabelDetalles(ref lblCodProd, codProd, posCod, y);
                     LabelDetalles(ref lblNombreProd, nomProd, posNom, y);
-                    LabelDetalles(ref lblCantProd, c.Cantidad[i].ToString("0.00"), posCan, y);
+                    LabelDetalles(ref lblCantProd, c.Cantidad[i].ToString(), posCan, y);
                     LabelDetalles(ref lblCostoProd, c.Precio[i].ToString("C2"), posCos, y);
                     LabelDetalles(ref lblDescuentoProd, c.DescuentoProducto[i].ToString("C2"), posDes, y);
                     switch (c.Unidad[i])
@@ -164,6 +174,7 @@ namespace EC_Admin.Forms
                     {
                         PictureBoxDetalles(ref pcbImagen, img, posPcb, y);
                         pnlDetallada.Controls.Add(pcbImagen);
+                        pnlDetallada.Controls.Add(lblCodProd);
                         pnlDetallada.Controls.Add(lblNombreProd);
                         pnlDetallada.Controls.Add(lblCantProd);
                         pnlDetallada.Controls.Add(lblCostoProd);
@@ -173,6 +184,7 @@ namespace EC_Admin.Forms
                     }
                     else
                     {
+                        pnlDetallada.Controls.Add(lblCodProd);
                         pnlDetallada.Controls.Add(lblNombreProd);
                         pnlDetallada.Controls.Add(lblCantProd);
                         pnlDetallada.Controls.Add(lblCostoProd);

@@ -35,6 +35,7 @@
             this.btnDirecciones = new System.Windows.Forms.Button();
             this.btnCuentas = new System.Windows.Forms.Button();
             this.btnAlmacen = new System.Windows.Forms.Button();
+            this.btnGenerales = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCorreo
@@ -48,7 +49,7 @@
             this.btnCorreo.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnCorreo.ForeColor = System.Drawing.Color.White;
             this.btnCorreo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCorreo.Location = new System.Drawing.Point(12, 12);
+            this.btnCorreo.Location = new System.Drawing.Point(12, 64);
             this.btnCorreo.Name = "btnCorreo";
             this.btnCorreo.Size = new System.Drawing.Size(149, 46);
             this.btnCorreo.TabIndex = 0;
@@ -68,7 +69,7 @@
             this.btnBaseDatos.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnBaseDatos.ForeColor = System.Drawing.Color.White;
             this.btnBaseDatos.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBaseDatos.Location = new System.Drawing.Point(12, 64);
+            this.btnBaseDatos.Location = new System.Drawing.Point(12, 116);
             this.btnBaseDatos.Name = "btnBaseDatos";
             this.btnBaseDatos.Size = new System.Drawing.Size(149, 46);
             this.btnBaseDatos.TabIndex = 1;
@@ -89,11 +90,11 @@
             this.btnTicket.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnTicket.ForeColor = System.Drawing.Color.White;
             this.btnTicket.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnTicket.Location = new System.Drawing.Point(363, 12);
+            this.btnTicket.Location = new System.Drawing.Point(12, 220);
             this.btnTicket.Name = "btnTicket";
             this.btnTicket.Size = new System.Drawing.Size(149, 46);
             this.btnTicket.TabIndex = 2;
-            this.btnTicket.Text = "Impresión tickets";
+            this.btnTicket.Text = "Impresión";
             this.btnTicket.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTicket.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnTicket.UseVisualStyleBackColor = false;
@@ -110,7 +111,7 @@
             this.btnSucursales.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnSucursales.ForeColor = System.Drawing.Color.White;
             this.btnSucursales.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSucursales.Location = new System.Drawing.Point(12, 116);
+            this.btnSucursales.Location = new System.Drawing.Point(12, 168);
             this.btnSucursales.Name = "btnSucursales";
             this.btnSucursales.Size = new System.Drawing.Size(149, 46);
             this.btnSucursales.TabIndex = 3;
@@ -131,7 +132,7 @@
             this.btnDirecciones.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnDirecciones.ForeColor = System.Drawing.Color.White;
             this.btnDirecciones.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDirecciones.Location = new System.Drawing.Point(12, 168);
+            this.btnDirecciones.Location = new System.Drawing.Point(363, 12);
             this.btnDirecciones.Name = "btnDirecciones";
             this.btnDirecciones.Size = new System.Drawing.Size(149, 46);
             this.btnDirecciones.TabIndex = 4;
@@ -139,6 +140,7 @@
             this.btnDirecciones.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDirecciones.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnDirecciones.UseVisualStyleBackColor = false;
+            this.btnDirecciones.Visible = false;
             this.btnDirecciones.Click += new System.EventHandler(this.btnDirecciones_Click);
             // 
             // btnCuentas
@@ -152,7 +154,7 @@
             this.btnCuentas.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnCuentas.ForeColor = System.Drawing.Color.White;
             this.btnCuentas.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCuentas.Location = new System.Drawing.Point(12, 220);
+            this.btnCuentas.Location = new System.Drawing.Point(363, 64);
             this.btnCuentas.Name = "btnCuentas";
             this.btnCuentas.Size = new System.Drawing.Size(149, 46);
             this.btnCuentas.TabIndex = 5;
@@ -160,6 +162,7 @@
             this.btnCuentas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCuentas.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnCuentas.UseVisualStyleBackColor = false;
+            this.btnCuentas.Visible = false;
             this.btnCuentas.Click += new System.EventHandler(this.btnCuentas_Click);
             // 
             // btnAlmacen
@@ -173,7 +176,7 @@
             this.btnAlmacen.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnAlmacen.ForeColor = System.Drawing.Color.White;
             this.btnAlmacen.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAlmacen.Location = new System.Drawing.Point(363, 64);
+            this.btnAlmacen.Location = new System.Drawing.Point(363, 116);
             this.btnAlmacen.Name = "btnAlmacen";
             this.btnAlmacen.Size = new System.Drawing.Size(149, 46);
             this.btnAlmacen.TabIndex = 6;
@@ -184,11 +187,33 @@
             this.btnAlmacen.Visible = false;
             this.btnAlmacen.Click += new System.EventHandler(this.btnAlmacen_Click);
             // 
+            // btnGenerales
+            // 
+            this.btnGenerales.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGenerales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnGenerales.FlatAppearance.BorderSize = 0;
+            this.btnGenerales.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(230)))));
+            this.btnGenerales.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(90)))));
+            this.btnGenerales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGenerales.Font = new System.Drawing.Font("Corbel", 11F);
+            this.btnGenerales.ForeColor = System.Drawing.Color.White;
+            this.btnGenerales.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGenerales.Location = new System.Drawing.Point(12, 12);
+            this.btnGenerales.Name = "btnGenerales";
+            this.btnGenerales.Size = new System.Drawing.Size(149, 46);
+            this.btnGenerales.TabIndex = 7;
+            this.btnGenerales.Text = "General";
+            this.btnGenerales.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGenerales.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnGenerales.UseVisualStyleBackColor = false;
+            this.btnGenerales.Click += new System.EventHandler(this.btnGenerales_Click);
+            // 
             // frmConfigs
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(524, 278);
+            this.Controls.Add(this.btnGenerales);
             this.Controls.Add(this.btnAlmacen);
             this.Controls.Add(this.btnCuentas);
             this.Controls.Add(this.btnDirecciones);
@@ -215,5 +240,6 @@
         private System.Windows.Forms.Button btnDirecciones;
         private System.Windows.Forms.Button btnCuentas;
         private System.Windows.Forms.Button btnAlmacen;
+        private System.Windows.Forms.Button btnGenerales;
     }
 }

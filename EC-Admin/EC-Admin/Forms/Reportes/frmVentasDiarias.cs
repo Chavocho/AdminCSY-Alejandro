@@ -38,6 +38,7 @@ namespace EC_Admin.Forms
         DelegadoMensajes d = new DelegadoMensajes(FuncionesGenerales.Mensaje);
         CerrarFrmEspera c;
 
+        List<int> idTrabajadores = new List<int>();
         List<string> codProductos = new List<string>();
         List<string> nombreProductos = new List<string>();
         List<decimal> cantProductos = new List<decimal>();
@@ -62,13 +63,43 @@ namespace EC_Admin.Forms
             FuncionesGenerales.frmEsperaClose();
         }
 
-        private void BuscarVentas(DateTime fechaIni)
+        private void CargarTrabajadores()
+        {
+            try
+            {
+                string sql = "SELECT id, nombre, apellidos FROM trabajador";
+                DataTable dt = ConexionBD.EjecutarConsultaSelect(sql);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    idTrabajadores.Add((int)dr["id"]);
+                    cboVendedor.Items.Add(dr["nombre"].ToString() + " " + dr["apellidos"].ToString());
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void BuscarVentas(DateTime fechaIni, bool trabajador, int idTrabajador = 0)
         {
             c = new CerrarFrmEspera(CerrarVenta);
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT * FROM venta WHERE DATE_FORMAT(create_time, '%Y-%m-%d')=?fecha_ini";
+                if (trabajador)
+                {
+                    sql.CommandText = "SELECT * FROM venta WHERE id_vendedor=?id_vendedor AND DATE_FORMAT(create_time, '%Y-%m-%d')=?fecha_ini AND abierta=0";
+                    sql.Parameters.AddWithValue("?id_vendedor", idTrabajador);
+                }
+                else
+                {
+                    sql.CommandText = "SELECT * FROM venta WHERE DATE_FORMAT(create_time, '%Y-%m-%d')=?fecha_ini AND abierta=0";
+                }
                 sql.Parameters.AddWithValue("?fecha_ini", fechaIni.ToString("yyyy-MM-dd"));
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
@@ -97,14 +128,14 @@ namespace EC_Admin.Forms
                 unidadesProductos.Clear();
 
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT v.*, p.nombre, p.codigo FROM venta_detallada AS v INNER JOIN producto AS p ON (v.id_producto=p.id) WHERE v.id_venta=?id_venta";
+                sql.CommandText = "SELECT v.*, p.nombre, p.codigo FROM venta_detallada AS v INNER JOIN producto AS p ON (v.id_producto=p.id) WHERE v.id_venta=?id_venta AND v.id_sucursal='" + Config.idSucursal + "'";
                 sql.Parameters.AddWithValue("?id_venta", id);
                 dtd = ConexionBD.EjecutarConsultaSelect(sql);
                 foreach (DataRow dr in dtd.Rows)
                 {
                     codProductos.Add(dr["codigo"].ToString());
                     nombreProductos.Add(dr["nombre"].ToString());
-                    cantProductos.Add((decimal)dr["cant"]);
+                    cantProductos.Add((int)dr["cant"]);
                     precioProductos.Add((decimal)dr["precio"]);
                     descuentoProductos.Add((decimal)dr["descuento"]);
                     unidadesProductos.Add((Unidades)Enum.Parse(typeof(Unidades), dr["unidad"].ToString()));
@@ -149,16 +180,8 @@ namespace EC_Admin.Forms
                             tipoPago = "Transferencia";
                             break;
                     }
-                    if ((bool)dr["factura"] == false)
-                    {
-                        tipoFolio = "Remisión";
-                        folio = dr["id"].ToString();
-                    }
-                    else
-                    {
-                        tipoFolio = "Factura";
-                        folio = dr["folio_factura"].ToString();
-                    }
+                    tipoFolio = "Remisión";
+                    folio = dr["id"].ToString();
                     dgvVentas.Rows.Add(new object[] { dr["id"], dr["id_vendedor"], dr["id_cliente"], dr["total"], tipoPago, dr["create_time"], tipoFolio, folio});
                 }
                 dgvVentas_RowEnter(dgvVentas, new DataGridViewCellEventArgs(0, 0));
@@ -302,6 +325,34 @@ namespace EC_Admin.Forms
             }
         }
 
+        private void CalcularTotales()
+        {
+            try
+            {
+                decimal tot = 0M, efe = 0M, vou = 0M;
+                foreach (DataGridViewRow dr in dgvVentas.Rows)
+                {
+                    tot += (decimal)dr.Cells[3].Value;
+                    if (dr.Cells[4].Value.ToString() == "Efectivo")
+                    {
+                        efe += (decimal)dr.Cells[3].Value;
+                    }
+                    else if (dr.Cells[4].Value.ToString() == "Crédito" || dr.Cells[4].Value.ToString() == "Débito")
+                    {
+                        vou += (decimal)dr.Cells[3].Value;
+                    }
+                }
+                lblTotal.Text = tot.ToString("C2");
+                lblVentas.Text = dgvVentas.RowCount.ToString();
+                lblEfectivo.Text = efe.ToString("C2");
+                lblVouchers.Text = vou.ToString("C2");
+            }
+            catch (Exception ex)
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al calcular los totales.", "Admin CSY", ex);
+            }
+        }
+
         private void dgvVentas_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -335,19 +386,21 @@ namespace EC_Admin.Forms
             if (!bgwBusquedaVentas.IsBusy)
             {
                 tmrEsperaVenta.Enabled = true;
-                bgwBusquedaVentas.RunWorkerAsync(dtpFechaInicio.Value);
+                bgwBusquedaVentas.RunWorkerAsync(new object[] { dtpFechaInicio.Value, chbTrabajador.Checked, idTrabajadores[cboVendedor.SelectedIndex] });
             }
         }
 
         private void bgwBusquedaVentas_DoWork(object sender, DoWorkEventArgs e)
         {
-            BuscarVentas((DateTime)e.Argument);
+            object[] a = (object[])e.Argument;
+            BuscarVentas((DateTime)a[0], (bool)a[1], (int)a[2]);
         }
 
         private void bgwBusquedaVentas_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             CerrarVenta();
             LlenarDataTable();
+            CalcularTotales();
         }
 
         private void tmrEsperaVenta_Tick(object sender, EventArgs e)
@@ -371,6 +424,25 @@ namespace EC_Admin.Forms
         {
             tmrEsperaDetallada.Enabled = false;
             FuncionesGenerales.frmEspera("Espere, cargando los productos de la venta", this);
+        }
+
+        private void frmVentasDiarias_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarTrabajadores();
+                cboVendedor.SelectedIndex = 0;
+            }
+            catch (MySqlException ex)
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al cargas los trabajadores. No se ha podido conectar a la base de datos. La búsqueda por trabajador estará desactivada.", "Admin CSY", ex);
+                chbTrabajador.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al cargas los trabajadores. La búsqueda por trabajador estará desactivada.", "Admin CSY", ex);
+                chbTrabajador.Enabled = false;
+            }
         }
     }
 }

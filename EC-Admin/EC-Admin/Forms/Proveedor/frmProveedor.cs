@@ -53,7 +53,7 @@ namespace EC_Admin.Forms
             c = new CerrarFrmEspera(Cerrar);
             try
             {
-                string sql = "SELECT id, nombre, razon_social, telefono1, telefono2, email, lada1, lada2 FROM proveedor WHERE nombre LIKE '%" + p + "%' AND eliminado=0";
+                string sql = "SELECT id, nombre, razon_social, telefono1, telefono2, email, lada1, lada2 FROM proveedor WHERE nombre LIKE '%" + p + "%' AND eliminado=0 AND sucursal_id='" + Config.idSucursal + "'";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)

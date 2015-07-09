@@ -33,6 +33,7 @@
             this.nudCant = new System.Windows.Forms.NumericUpDown();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.nudDescuento = new System.Windows.Forms.NumericUpDown();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudCant)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDescuento)).BeginInit();
             this.SuspendLayout();
@@ -42,11 +43,11 @@
             this.lblEDescuento.AutoSize = true;
             this.lblEDescuento.Font = new System.Drawing.Font("Corbel", 11F);
             this.lblEDescuento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
-            this.lblEDescuento.Location = new System.Drawing.Point(135, 10);
+            this.lblEDescuento.Location = new System.Drawing.Point(153, 10);
             this.lblEDescuento.Name = "lblEDescuento";
-            this.lblEDescuento.Size = new System.Drawing.Size(89, 18);
+            this.lblEDescuento.Size = new System.Drawing.Size(74, 18);
             this.lblEDescuento.TabIndex = 2;
-            this.lblEDescuento.Text = "% Descuento";
+            this.lblEDescuento.Text = "Descuento";
             // 
             // lblECant
             // 
@@ -61,7 +62,6 @@
             // 
             // nudCant
             // 
-            this.nudCant.DecimalPlaces = 2;
             this.nudCant.Font = new System.Drawing.Font("Corbel", 11F);
             this.nudCant.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.nudCant.Location = new System.Drawing.Point(12, 31);
@@ -89,7 +89,7 @@
             this.btnAceptar.Font = new System.Drawing.Font("Corbel", 11F);
             this.btnAceptar.ForeColor = System.Drawing.Color.White;
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAceptar.Location = new System.Drawing.Point(111, 83);
+            this.btnAceptar.Location = new System.Drawing.Point(155, 107);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(150, 46);
             this.btnAceptar.TabIndex = 4;
@@ -101,12 +101,28 @@
             // 
             // nudDescuento
             // 
-            this.nudDescuento.DecimalPlaces = 2;
             this.nudDescuento.Font = new System.Drawing.Font("Corbel", 11F);
-            this.nudDescuento.Location = new System.Drawing.Point(138, 31);
+            this.nudDescuento.Location = new System.Drawing.Point(153, 31);
+            this.nudDescuento.Maximum = new decimal(new int[] {
+            276447231,
+            23283,
+            0,
+            0});
             this.nudDescuento.Name = "nudDescuento";
             this.nudDescuento.Size = new System.Drawing.Size(123, 25);
             this.nudDescuento.TabIndex = 9;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Font = new System.Drawing.Font("Corbel", 11F);
+            this.checkBox1.Location = new System.Drawing.Point(12, 76);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(170, 22);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Utilizar descuento en %";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // frmDatosVentaProducto
             // 
@@ -114,7 +130,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(273, 141);
+            this.ClientSize = new System.Drawing.Size(317, 165);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.nudDescuento);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.lblEDescuento);
@@ -140,5 +157,6 @@
         private System.Windows.Forms.NumericUpDown nudCant;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.NumericUpDown nudDescuento;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

@@ -77,6 +77,9 @@ namespace EC_Admin
         private static decimal totalEfe = -1;
         private static decimal totalVou = -1;
 
+        /// <summary>
+        /// Obtiene el total del efectivo que hay actualmente en caja
+        /// </summary>
         public static decimal TotalEfectivo
         {
             get
@@ -87,6 +90,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Obtiene el total de los vouchers que hay actualmente en caja
+        /// </summary>
         public static decimal TotalVouchers
         {
             get
@@ -97,7 +103,9 @@ namespace EC_Admin
             }
         }
         
-
+        /// <summary>
+        /// Método que obtiene los totales de caja
+        /// </summary>
         private static void Totales()
         {
             try
@@ -128,11 +136,17 @@ namespace EC_Admin
         }        
         #endregion
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Caja
+        /// </summary>
         public Caja()
         {
 
         }
 
+        /// <summary>
+        /// Método que actualiza el estado de la caja
+        /// </summary>
         public static void EstadoC()
         {
             try
@@ -162,6 +176,10 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que cambia el estado de la caja
+        /// </summary>
+        /// <param name="estado">True para abierta, False para cerrada</param>
         public static void CambiarEstadoCaja(bool estado)
         {
             try
@@ -182,6 +200,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que inserta un nuevo movimiento en la base de datos con los datos de las propiedades
+        /// </summary>
         public void RegistrarMovimiento()
         {
             try

@@ -35,15 +35,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bgwBusqueda = new System.ComponentModel.BackgroundWorker();
             this.dgvCompras = new System.Windows.Forms.DataGridView();
-            this.CID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnVisualizar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.dtpFechaFin = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.tmrEspera = new System.Windows.Forms.Timer(this.components);
+            this.CID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CProveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CComprador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompras)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,6 +85,8 @@
             this.dgvCompras.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CID,
             this.CFecha,
+            this.CProveedor,
+            this.CComprador,
             this.CTotal});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
@@ -104,26 +108,6 @@
             this.dgvCompras.Size = new System.Drawing.Size(803, 401);
             this.dgvCompras.TabIndex = 3;
             this.dgvCompras.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompras_RowEnter);
-            // 
-            // CID
-            // 
-            this.CID.HeaderText = "ID";
-            this.CID.Name = "CID";
-            this.CID.Visible = false;
-            // 
-            // CFecha
-            // 
-            this.CFecha.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.CFecha.HeaderText = "Fecha";
-            this.CFecha.Name = "CFecha";
-            // 
-            // CTotal
-            // 
-            dataGridViewCellStyle3.Format = "C2";
-            this.CTotal.DefaultCellStyle = dataGridViewCellStyle3;
-            this.CTotal.HeaderText = "Total";
-            this.CTotal.Name = "CTotal";
-            this.CTotal.Width = 150;
             // 
             // btnVisualizar
             // 
@@ -207,6 +191,37 @@
             this.tmrEspera.Interval = 300;
             this.tmrEspera.Tick += new System.EventHandler(this.tmrEspera_Tick);
             // 
+            // CID
+            // 
+            this.CID.HeaderText = "ID";
+            this.CID.Name = "CID";
+            this.CID.Visible = false;
+            // 
+            // CFecha
+            // 
+            this.CFecha.HeaderText = "Fecha";
+            this.CFecha.Name = "CFecha";
+            this.CFecha.Width = 200;
+            // 
+            // CProveedor
+            // 
+            this.CProveedor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.CProveedor.HeaderText = "Proveedor";
+            this.CProveedor.Name = "CProveedor";
+            // 
+            // CComprador
+            // 
+            this.CComprador.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.CComprador.HeaderText = "Comprador";
+            this.CComprador.Name = "CComprador";
+            // 
+            // CTotal
+            // 
+            dataGridViewCellStyle3.Format = "C2";
+            this.CTotal.DefaultCellStyle = dataGridViewCellStyle3;
+            this.CTotal.HeaderText = "Total";
+            this.CTotal.Name = "CTotal";
+            // 
             // frmCompras
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -241,6 +256,8 @@
         private System.Windows.Forms.Timer tmrEspera;
         private System.Windows.Forms.DataGridViewTextBoxColumn CID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CProveedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CComprador;
         private System.Windows.Forms.DataGridViewTextBoxColumn CTotal;
     }
 }

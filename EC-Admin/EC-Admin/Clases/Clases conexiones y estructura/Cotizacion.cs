@@ -135,7 +135,7 @@ namespace EC_Admin
 
         #region Propiedades Cotización Detallada
         private List<int> idP;
-        private List<decimal> cantidad;
+        private List<int> cantidad;
         private List<decimal> precio;
         private List<decimal> descuentoP;
         private List<Unidades> unidad;
@@ -146,7 +146,7 @@ namespace EC_Admin
             set { idP = value; }
         }
 
-        public List<decimal> Cantidad
+        public List<int> Cantidad
         {
             get { return cantidad; }
             set { cantidad = value; }
@@ -171,11 +171,18 @@ namespace EC_Admin
         }
         #endregion
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Cotizacion
+        /// </summary>
         public Cotizacion()
         {
             InicializarDetallada();
         }
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Cotizacion con el ID asociado
+        /// </summary>
+        /// <param name="id"></param>
         public Cotizacion(int id)
         {
             this.id = id;
@@ -204,7 +211,7 @@ namespace EC_Admin
         private void InicializarDetallada()
         {
             idP = new List<int>();
-            cantidad = new List<decimal>();
+            cantidad = new List<int>();
             precio = new List<decimal>();
             descuentoP = new List<decimal>();
             unidad = new List<Unidades>();
@@ -377,7 +384,7 @@ namespace EC_Admin
                 foreach (DataRow dr in dt.Rows)
                 {
                     idP.Add((int)dr["id_producto"]);
-                    cantidad.Add((decimal)dr["cant"]);
+                    cantidad.Add((int)dr["cant"]);
                     precio.Add((decimal)dr["precio"]);
                     descuentoP.Add((decimal)dr["descuento"]);
                     unidad.Add((Unidades)Enum.Parse(typeof(Unidades), dr["unidad"].ToString()));

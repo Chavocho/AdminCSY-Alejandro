@@ -63,7 +63,6 @@
             this.lblFolio = new System.Windows.Forms.Label();
             this.lblEFolio = new System.Windows.Forms.Label();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.bgwImagen = new System.ComponentModel.BackgroundWorker();
             this.CID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +70,7 @@
             this.CCant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CUnidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bgwImagen = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pcbProducto)).BeginInit();
             this.grbTotales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
@@ -520,10 +520,6 @@
             this.dgvProductos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvProductos_RowsAdded);
             this.dgvProductos.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvProductos_RowsRemoved);
             // 
-            // bgwImagen
-            // 
-            this.bgwImagen.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwImagen_DoWork);
-            // 
             // CID
             // 
             this.CID.HeaderText = "ID";
@@ -568,6 +564,10 @@
             this.CUnidad.HeaderText = "Unidad";
             this.CUnidad.Name = "CUnidad";
             this.CUnidad.Visible = false;
+            // 
+            // bgwImagen
+            // 
+            this.bgwImagen.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwImagen_DoWork);
             // 
             // frmCotizacion
             // 

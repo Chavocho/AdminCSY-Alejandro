@@ -33,6 +33,8 @@
             this.lblSubtitulo = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.bgwCargando = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -60,10 +62,11 @@
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(0, 385);
+            this.progressBar1.MarqueeAnimationSpeed = 25;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(771, 5);
             this.progressBar1.Step = 1;
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 2;
             this.progressBar1.Value = 100;
             // 
@@ -72,12 +75,29 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.t_Tick);
             // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Font = new System.Drawing.Font("Corbel", 11F, System.Drawing.FontStyle.Bold);
+            this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.lblEstado.Location = new System.Drawing.Point(291, 320);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(189, 18);
+            this.lblEstado.TabIndex = 3;
+            this.lblEstado.Text = "Espere, cargando aplicación";
+            // 
+            // bgwCargando
+            // 
+            this.bgwCargando.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwCargando_DoWork);
+            this.bgwCargando.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwCargando_RunWorkerCompleted);
+            // 
             // frmSplash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(771, 390);
+            this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblSubtitulo);
             this.Controls.Add(this.lblTitulo);
@@ -99,5 +119,7 @@
         private System.Windows.Forms.Label lblSubtitulo;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lblEstado;
+        private System.ComponentModel.BackgroundWorker bgwCargando;
     }
 }

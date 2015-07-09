@@ -21,8 +21,6 @@ namespace EC_Admin
             ObtenerDatosConfiguracion();
             pd = new PrintDocument();
             ppd = new PrintPreviewDialog();
-            dtVenta = new DataTable();
-            dtVentaDetallada = new DataTable();
             fuenteNormal = new Font("Consolas", 10F, FontStyle.Regular);
             fuenteNormalResaltada = new Font("Consolas", 10F, FontStyle.Bold);
             fuenteGrande = new Font("Consolas", 12F, FontStyle.Regular);
@@ -35,6 +33,8 @@ namespace EC_Admin
             try
             {
                 this.idVenta = id;
+                dtVenta = new DataTable();
+                dtVentaDetallada = new DataTable();
                 pd.PrintPage += new PrintPageEventHandler(pd_PrintPageTicketVenta);
                 pd.DocumentName = "Ticket";
                 pd.DefaultPageSettings.PaperSize = new PaperSize("Ticket", 300, 10000);
@@ -104,6 +104,50 @@ namespace EC_Admin
             }
         }
 
+        public void TicketCodigoProducto(int idProducto)
+        {
+            try
+            {
+                this.idProd = idProducto; 
+                pd.PrintPage += new PrintPageEventHandler(pd_PrintPageTicketCodigoProducto);
+                pd.DocumentName = "Ticket";
+                pd.DefaultPageSettings.PaperSize = new PaperSize("Ticket", 300, 10000);
+                if (impresoraTickets != "")
+                    pd.PrinterSettings.PrinterName = impresoraTickets;
+                else
+                    throw new InvalidPrinterException(pd.PrinterSettings);
+                pd.DefaultPageSettings.Landscape = false;
+                //ppd.Document = pd;
+                //ppd.ShowDialog();
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void TicketDevolucion(int idDevolucion)
+        {
+            try
+            {
+                this.idDev = idDevolucion;
+                dtDevolucion = new DataTable();
+                dtDevolucionDetallada = new DataTable();
+                pd.PrintPage += new PrintPageEventHandler(pd_PrintPageTicketDevolucion);
+                pd.DocumentName = "Ticket";
+                pd.DefaultPageSettings.PaperSize = new PaperSize("Ticket", 300, 10000);
+                pd.DefaultPageSettings.Landscape = false;
+                //ppd.Document = pd;
+                //ppd.ShowDialog();
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private void pd_PrintPageTicketVenta(object sender, PrintPageEventArgs e)
         {
             try
@@ -150,6 +194,34 @@ namespace EC_Admin
             catch (MySqlException ex)
             {
                 throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void pd_PrintPageTicketCodigoProducto(object sender, PrintPageEventArgs e)
+        {
+            try
+            {
+                AgregarCodigoBarrasProducto(ref e);
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void pd_PrintPageTicketDevolucion(object sender, PrintPageEventArgs e)
+        {
+            try
+            {
+                
             }
             catch (Exception ex)
             {

@@ -63,32 +63,35 @@ namespace EC_Admin.Forms
 
         private bool VerificarDatos()
         {
+            bool res = true;
             if (txtClabe.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo clabe es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtClabe);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtClabe);
             }
             if (txtBanco.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo banco es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtBanco);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtBanco);
             }
             if (txtBeneficiario.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo beneficiario es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtBeneficiario);
+                res = false;
             }
-            if (txtSucursal.Text.Trim() == "")
+            else
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo sucursal es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresBien(txtBeneficiario);
             }
-            if (txtNumCuenta.Text.Trim() == "")
-            {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número de cuenta es obligatorio", "Admin CSY");
-                return false;
-            }
-            return true;
+            return res;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -109,6 +112,10 @@ namespace EC_Admin.Forms
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al crear la nueva cuenta.", "Admin CSY", ex);
                 }
+            }
+            else
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Los campos en color rojo son obligatorios", "Admin CSY");
             }
         }
 

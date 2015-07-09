@@ -29,18 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEspera));
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblMensaje = new System.Windows.Forms.Label();
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.progressBar1 = new ControlesUsuario.ProgressBar();
             this.SuspendLayout();
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 89);
-            this.progressBar1.MarqueeAnimationSpeed = 50;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(518, 19);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar1.TabIndex = 1;
             // 
             // lblMensaje
             // 
@@ -54,6 +46,15 @@
             this.lblMensaje.TabIndex = 0;
             this.lblMensaje.Text = "Buscando";
             // 
+            // elementHost1
+            // 
+            this.elementHost1.Location = new System.Drawing.Point(12, 88);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(518, 20);
+            this.elementHost1.TabIndex = 1;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.progressBar1;
+            // 
             // frmEspera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -61,14 +62,13 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(542, 120);
             this.ControlBox = false;
+            this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.lblMensaje);
-            this.Controls.Add(this.progressBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmEspera";
-            this.Opacity = 0.7D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Buscando";
             this.ResumeLayout(false);
@@ -78,7 +78,8 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblMensaje;
+        private System.Windows.Forms.Integration.ElementHost elementHost1;
+        private ControlesUsuario.ProgressBar progressBar1;
     }
 }

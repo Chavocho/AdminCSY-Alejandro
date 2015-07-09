@@ -34,7 +34,7 @@
             this.txtLineaInferior02 = new System.Windows.Forms.TextBox();
             this.txtLineaInferior01 = new System.Windows.Forms.TextBox();
             this.txtLineaSuperior07 = new System.Windows.Forms.TextBox();
-            this.lblImpresoras = new System.Windows.Forms.Label();
+            this.lblEImpresora = new System.Windows.Forms.Label();
             this.txtLineaSuperior06 = new System.Windows.Forms.TextBox();
             this.txtLineaSuperior05 = new System.Windows.Forms.TextBox();
             this.txtLineaSuperior04 = new System.Windows.Forms.TextBox();
@@ -46,6 +46,8 @@
             this.cboImpresoras = new System.Windows.Forms.ComboBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.chbImprimir = new System.Windows.Forms.CheckBox();
+            this.cboImpresoraCodigo = new System.Windows.Forms.ComboBox();
+            this.lblEImpresoraCodigo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pcbTicket)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,15 +106,15 @@
             this.txtLineaSuperior07.TabIndex = 49;
             this.txtLineaSuperior07.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblImpresoras
+            // lblEImpresora
             // 
-            this.lblImpresoras.AutoSize = true;
-            this.lblImpresoras.Font = new System.Drawing.Font("Corbel", 13F);
-            this.lblImpresoras.Location = new System.Drawing.Point(8, 9);
-            this.lblImpresoras.Name = "lblImpresoras";
-            this.lblImpresoras.Size = new System.Drawing.Size(98, 22);
-            this.lblImpresoras.TabIndex = 32;
-            this.lblImpresoras.Text = "Impresoras:";
+            this.lblEImpresora.AutoSize = true;
+            this.lblEImpresora.Font = new System.Drawing.Font("Corbel", 13F);
+            this.lblEImpresora.Location = new System.Drawing.Point(8, 9);
+            this.lblEImpresora.Name = "lblEImpresora";
+            this.lblEImpresora.Size = new System.Drawing.Size(167, 22);
+            this.lblEImpresora.TabIndex = 32;
+            this.lblEImpresora.Text = "Impresora de tickets:";
             // 
             // txtLineaSuperior06
             // 
@@ -249,12 +251,38 @@
             this.chbImprimir.Text = "Imprimir tickets";
             this.chbImprimir.UseVisualStyleBackColor = true;
             // 
+            // cboImpresoraCodigo
+            // 
+            this.cboImpresoraCodigo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(250)))));
+            this.cboImpresoraCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboImpresoraCodigo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboImpresoraCodigo.Font = new System.Drawing.Font("Corbel", 13F);
+            this.cboImpresoraCodigo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.cboImpresoraCodigo.FormattingEnabled = true;
+            this.cboImpresoraCodigo.Location = new System.Drawing.Point(12, 96);
+            this.cboImpresoraCodigo.Name = "cboImpresoraCodigo";
+            this.cboImpresoraCodigo.Size = new System.Drawing.Size(259, 29);
+            this.cboImpresoraCodigo.TabIndex = 57;
+            this.cboImpresoraCodigo.SelectedIndexChanged += new System.EventHandler(this.cboImpresoraCodigo_SelectedIndexChanged);
+            // 
+            // lblEImpresoraCodigo
+            // 
+            this.lblEImpresoraCodigo.AutoSize = true;
+            this.lblEImpresoraCodigo.Font = new System.Drawing.Font("Corbel", 13F);
+            this.lblEImpresoraCodigo.Location = new System.Drawing.Point(8, 71);
+            this.lblEImpresoraCodigo.Name = "lblEImpresoraCodigo";
+            this.lblEImpresoraCodigo.Size = new System.Drawing.Size(177, 22);
+            this.lblEImpresoraCodigo.TabIndex = 56;
+            this.lblEImpresoraCodigo.Text = "Impresora de códigos:";
+            // 
             // frmConfigTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(876, 517);
+            this.Controls.Add(this.cboImpresoraCodigo);
+            this.Controls.Add(this.lblEImpresoraCodigo);
             this.Controls.Add(this.chbImprimir);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.cboImpresoras);
@@ -263,7 +291,7 @@
             this.Controls.Add(this.txtLineaInferior02);
             this.Controls.Add(this.txtLineaInferior01);
             this.Controls.Add(this.txtLineaSuperior07);
-            this.Controls.Add(this.lblImpresoras);
+            this.Controls.Add(this.lblEImpresora);
             this.Controls.Add(this.txtLineaSuperior06);
             this.Controls.Add(this.txtLineaSuperior05);
             this.Controls.Add(this.txtLineaSuperior04);
@@ -289,7 +317,7 @@
         private System.Windows.Forms.TextBox txtLineaInferior02;
         private System.Windows.Forms.TextBox txtLineaInferior01;
         private System.Windows.Forms.TextBox txtLineaSuperior07;
-        private System.Windows.Forms.Label lblImpresoras;
+        private System.Windows.Forms.Label lblEImpresora;
         private System.Windows.Forms.TextBox txtLineaSuperior06;
         private System.Windows.Forms.TextBox txtLineaSuperior05;
         private System.Windows.Forms.TextBox txtLineaSuperior04;
@@ -301,5 +329,7 @@
         private System.Windows.Forms.ComboBox cboImpresoras;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.CheckBox chbImprimir;
+        private System.Windows.Forms.ComboBox cboImpresoraCodigo;
+        private System.Windows.Forms.Label lblEImpresoraCodigo;
     }
 }

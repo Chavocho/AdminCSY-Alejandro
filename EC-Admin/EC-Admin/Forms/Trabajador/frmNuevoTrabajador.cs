@@ -103,36 +103,69 @@ namespace EC_Admin.Forms
             if (cboSucursal.SelectedIndex < 0)
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Se debe seleccionar una sucursal asociada con éste trabajador.", "Admin CSY");
+                FuncionesGenerales.ColoresError(cboSucursal);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(cboSucursal);
             }
             if (txtNombre.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtApellidos.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo apellidos es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtApellidos);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtApellidos);
             }
             if (cboPuesto.SelectedIndex < 0)
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Se debe seleccionar un puesto asociado con éste trabajador.", "Admin CSY");
+                FuncionesGenerales.ColoresError(cboPuesto);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(cboPuesto);
             }
             if (txtTelefono.Text.Trim() == "" && txtCelular.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar al menos un número de teléfono.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtCelular);
+                FuncionesGenerales.ColoresError(txtTelefono);
                 return false;
+            }
+            else
+            {
+               FuncionesGenerales.ColoresBien(txtCelular);
+               FuncionesGenerales.ColoresBien(txtTelefono);
             }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El correo ingresado no se reconoce cómo uno válido.", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtCorreo);
                     return false;
                 }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCorreo);
+                }
             }
+
             return true;
         }
 

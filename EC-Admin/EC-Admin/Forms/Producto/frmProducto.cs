@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Drawing.Printing;
 
 namespace EC_Admin.Forms
 {
@@ -43,18 +44,25 @@ namespace EC_Admin.Forms
 
         private void Cerrar()
         {
-            txtBusqueda.Enabled = true;
             tmrEspera.Enabled = false;
             FuncionesGenerales.frmEsperaClose();
-            txtBusqueda.Select();
         }
 
-        private void Buscar(string p)
+        private void Buscar(string p, bool existencias)
         {
             try
             {
-                string sql = "SELECT id, nombre, codigo, costo, precio, cant FROM producto " +
-                    "WHERE (nombre LIKE '%" + p + "%' OR codigo='" + p + "') AND eliminado=0";
+                string sql;
+                if (existencias)
+                {
+                    sql = "SELECT p.id, p.nombre, p.codigo, p.descripcion1, i.precio, i.cant FROM producto AS p INNER JOIN inventario AS i ON (p.id=i.id_producto)" +
+                        "WHERE (p.nombre LIKE '%" + p + "%' OR p.codigo LIKE '%" + p + "%') AND i.cant>0 AND p.eliminado=0";
+                }
+                else
+                {
+                    sql = "SELECT p.id, p.nombre, p.codigo, p.descripcion1, i.precio, i.cant FROM producto AS p INNER JOIN inventario AS i ON (p.id=i.id_producto)" +
+                        "WHERE (p.nombre LIKE '%" + p + "%' OR p.codigo LIKE '%" + p + "%') AND p.eliminado=0";
+                }
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)
@@ -76,9 +84,10 @@ namespace EC_Admin.Forms
                 dgvProductos.Rows.Clear();
                 foreach (DataRow dr in dt.Rows)
                 {
-                    dgvProductos.Rows.Add(new object[] { dr["id"], dr["nombre"], dr["codigo"], dr["costo"], dr["precio"], dr["cant"] });
+                    dgvProductos.Rows.Add(new object[] { dr["id"], dr["nombre"], dr["descripcion1"], dr["codigo"], dr["precio"], dr["cant"] });
                 }
                 dgvProductos_RowEnter(dgvProductos, new DataGridViewCellEventArgs(0, 0));
+                txtBusqueda.Select();
             }
             catch (Exception ex)
             {
@@ -114,9 +123,11 @@ namespace EC_Admin.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                txtBusqueda.Enabled = false;
-                tmrEspera.Enabled = true;
-                bgwBusqueda.RunWorkerAsync(txtBusqueda.Text);
+                if (!bgwBusqueda.IsBusy)
+                {
+                    tmrEspera.Enabled = true;
+                    bgwBusqueda.RunWorkerAsync(new object[] { txtBusqueda.Text, chbExistencias.Checked });
+                }
             }
         }
 
@@ -159,7 +170,8 @@ namespace EC_Admin.Forms
 
         private void bgwBusqueda_DoWork(object sender, DoWorkEventArgs e)
         {
-            Buscar(e.Argument.ToString());
+            object[] a = (object[])e.Argument;
+            Buscar(a[0].ToString(), (bool)a[1]);
         }
 
         private void bgwBusqueda_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -172,6 +184,50 @@ namespace EC_Admin.Forms
         {
             tmrEspera.Enabled = false;
             FuncionesGenerales.frmEspera("Espere, cargando productos", this);
+        }
+
+        private void btnPromociones_Click(object sender, EventArgs e)
+        {
+            if (!frmPromociones.Instancia.Visible)
+                frmPromociones.Instancia.Show();
+            else
+                frmPromociones.Instancia.Select();
+        }
+
+        private void btnCodigo_Click(object sender, EventArgs e)
+        {
+            if (dgvProductos.CurrentRow != null)
+            {
+                try
+                {
+                    int cant = int.Parse((new frmCantidadTickets()).Cantidad().ToString());
+                    if (FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "¿Desea imprimir " + cant.ToString() + " tickets?", "Admin CSY") == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        for (int i = 0; i < cant; i++)
+                        {
+                            Ticket t = new Ticket();
+                            t.TicketCodigoProducto(id);
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al imprimir el ticket. No se ha podido conectar con la base de datos.", "Admin CSY", ex);
+                }
+                catch (InvalidPrinterException ex)
+                {
+                    FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al imprimir el ticket. La impresora seleccionada se encuentra apagada o no es accesible desde la red.", "Admin CSY", ex);
+                }
+                catch (Exception ex)
+                {
+                    FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al imprimir el ticket.", "Admin CSY", ex);
+                }
+            }
+        }
+
+        private void btnTraspasos_Click(object sender, EventArgs e)
+        {
+            (new frmTraspasos()).Show();
         }
     }
 }

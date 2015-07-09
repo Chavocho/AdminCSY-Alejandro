@@ -175,5 +175,10 @@ namespace EC_Admin.Forms
             tmrEspera.Enabled = false;
             FuncionesGenerales.frmEspera("Espere, cargando sucursales", this);
         }
+
+        private void btnCambiar_Click(object sender, EventArgs e)
+        {
+            (new frmAsignarSucursal()).ShowDialog(this);
+        }
     }
 }

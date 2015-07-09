@@ -44,8 +44,6 @@ namespace EC_Admin.Forms
         private void Cerrar()
         {
             tmrEspera.Enabled = false;
-            txtBusqueda.Enabled = true;
-            txtBusqueda.Select();
             FuncionesGenerales.frmEsperaClose();
         }
 
@@ -53,7 +51,7 @@ namespace EC_Admin.Forms
         {
             try
             {
-                string sql = "SELECT t.id, t.nombre, t.apellidos, p.nombre AS puesto, t.telefono, t.celular, t.email FROM trabajador AS t INNER JOIN puesto AS p ON (t.puesto=p.id) WHERE (t.nombre LIKE '%" + p + "%' OR t.apellidos LIKE '%" + p + "%') AND t.eliminado=0";
+                string sql = "SELECT t.id, t.nombre, t.apellidos, p.nombre AS puesto, t.telefono, t.celular, t.email FROM trabajador AS t INNER JOIN puesto AS p ON (t.puesto=p.id) WHERE (t.nombre LIKE '%" + p + "%' OR t.apellidos LIKE '%" + p + "%') AND t.eliminado=0 AND t.id_sucursal='" + Config.idSucursal + "'";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)
@@ -123,7 +121,6 @@ namespace EC_Admin.Forms
             if (e.KeyCode == Keys.Enter)
             {
                 tmrEspera.Enabled = true;
-                txtBusqueda.Enabled = false;
                 bgwBusqueda.RunWorkerAsync(txtBusqueda.Text);
             }
         }

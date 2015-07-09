@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
+﻿using System.Drawing.Printing;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EC_Admin
 {
@@ -15,13 +10,15 @@ namespace EC_Admin
         int y;
         const int saltoLinea = 15;
         int idVenta;
+        int idProd;
+        int idDev;
         bool esCierreCaja;
         //Variables para el corte de caja
         int idApertura;
         int idCierre;
 
-        string idProd;
         string impresora;
+        string impresoraTickets;
         string lineaSup01;
         string lineaSup02;
         string lineaSup03;
@@ -38,6 +35,8 @@ namespace EC_Admin
         DataTable dtVenta;
         DataTable dtVentaDetallada;
         DataTable dtCaja;
+        DataTable dtDevolucion;
+        DataTable dtDevolucionDetallada;
         Font fuenteNormal;
         Font fuenteNormalResaltada;
         Font fuenteGrande;

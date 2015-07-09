@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCaja = new System.Windows.Forms.DataGridView();
             this.CID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,11 +75,11 @@
             this.dgvCaja.AllowUserToDeleteRows = false;
             this.dgvCaja.AllowUserToResizeColumns = false;
             this.dgvCaja.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(240)))));
-            this.dgvCaja.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(240)))));
+            this.dgvCaja.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvCaja.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -87,14 +87,14 @@
             this.dgvCaja.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCaja.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvCaja.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Corbel", 11F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCaja.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Corbel", 11F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCaja.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvCaja.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCaja.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CID,
@@ -103,14 +103,14 @@
             this.CEfectivo,
             this.CVouchers,
             this.CTipoMovimiento});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Corbel", 11F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCaja.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Corbel", 11F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(75)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCaja.DefaultCellStyle = dataGridViewCellStyle12;
             this.dgvCaja.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvCaja.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(90)))));
             this.dgvCaja.Location = new System.Drawing.Point(12, 74);
@@ -132,8 +132,8 @@
             // 
             // CFecha
             // 
-            dataGridViewCellStyle3.Format = "dd \' de \' MMMM \' del \' yyyy, hh:mm tt";
-            this.CFecha.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Format = "dd \' de \' MMMM \' del \' yyyy, hh:mm tt";
+            this.CFecha.DefaultCellStyle = dataGridViewCellStyle9;
             this.CFecha.HeaderText = "Fecha";
             this.CFecha.Name = "CFecha";
             this.CFecha.Width = 200;
@@ -146,15 +146,15 @@
             // 
             // CEfectivo
             // 
-            dataGridViewCellStyle4.Format = "C2";
-            this.CEfectivo.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Format = "C2";
+            this.CEfectivo.DefaultCellStyle = dataGridViewCellStyle10;
             this.CEfectivo.HeaderText = "Efectivo";
             this.CEfectivo.Name = "CEfectivo";
             // 
             // CVouchers
             // 
-            dataGridViewCellStyle5.Format = "C2";
-            this.CVouchers.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Format = "C2";
+            this.CVouchers.DefaultCellStyle = dataGridViewCellStyle11;
             this.CVouchers.HeaderText = "Vouchers";
             this.CVouchers.Name = "CVouchers";
             // 
@@ -255,7 +255,7 @@
             this.btnSalida.Name = "btnSalida";
             this.btnSalida.Size = new System.Drawing.Size(200, 60);
             this.btnSalida.TabIndex = 17;
-            this.btnSalida.Text = "Salida";
+            this.btnSalida.Text = "Salida (F3)";
             this.btnSalida.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSalida.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSalida.UseVisualStyleBackColor = false;
@@ -276,7 +276,7 @@
             this.btnEntrada.Name = "btnEntrada";
             this.btnEntrada.Size = new System.Drawing.Size(200, 60);
             this.btnEntrada.TabIndex = 16;
-            this.btnEntrada.Text = "Entrada";
+            this.btnEntrada.Text = "Entrada (F2)";
             this.btnEntrada.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEntrada.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEntrada.UseVisualStyleBackColor = false;
@@ -396,7 +396,7 @@
             this.btnAbrirCerrar.Name = "btnAbrirCerrar";
             this.btnAbrirCerrar.Size = new System.Drawing.Size(200, 60);
             this.btnAbrirCerrar.TabIndex = 19;
-            this.btnAbrirCerrar.Text = "Abrir caja";
+            this.btnAbrirCerrar.Text = "Abrir caja (F1)";
             this.btnAbrirCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAbrirCerrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAbrirCerrar.UseVisualStyleBackColor = false;
@@ -427,7 +427,7 @@
             this.btnCortes.Name = "btnCortes";
             this.btnCortes.Size = new System.Drawing.Size(200, 60);
             this.btnCortes.TabIndex = 20;
-            this.btnCortes.Text = "Cortes de caja";
+            this.btnCortes.Text = "Cortes de caja (F4)";
             this.btnCortes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCortes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCortes.UseVisualStyleBackColor = false;
@@ -454,6 +454,7 @@
             this.Text = "Caja";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCaja_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmCaja_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaja)).EndInit();
             this.grbFechas.ResumeLayout(false);
             this.grbFolio.ResumeLayout(false);

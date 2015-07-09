@@ -14,7 +14,7 @@ namespace EC_Admin.Forms
     public partial class frmMapa : Form
     {
         private string archivo = Application.StartupPath + "\\mapas\\mapa.html";
-        private string archivomapa = Application.StartupPath + "\\mapas\\mapapersona.html";
+        private string mapaUbicacion = Application.StartupPath + "\\mapas\\MapaUbicacionPersona.html";
         private string direccion;
         private Uri mapa;
 
@@ -33,9 +33,9 @@ namespace EC_Admin.Forms
                 {
                     string html = "";
                     html = File.ReadAllText(archivo);
-                    html = html.Replace("@onta_persona@", direccion);
-                    File.WriteAllText(archivomapa, html);
-                    mapa = new Uri(archivomapa);
+                    html = html.Replace("@direccion_persona@", direccion);
+                    File.WriteAllText(mapaUbicacion, html);
+                    mapa = new Uri(mapaUbicacion);
                     wbrMapa.Url = mapa;
                 }
             }

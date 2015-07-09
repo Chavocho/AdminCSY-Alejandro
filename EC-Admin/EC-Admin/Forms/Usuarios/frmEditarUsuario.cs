@@ -87,6 +87,7 @@ namespace EC_Admin.Forms
                 if (txtAntiPass.Text != u.Contraseña)
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "La contraseña actual no coincide.", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtAntiPass);
                     return false;
                 }
                 else
@@ -94,6 +95,7 @@ namespace EC_Admin.Forms
                     if (txtPass.Text.Trim() == "")
                     {
                         FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo contraseña es obligatorio.", "Admin CSY");
+                        FuncionesGenerales.ColoresError(txtPass);
                         return false;
                     }
                     else
@@ -101,27 +103,49 @@ namespace EC_Admin.Forms
                         if (txtPass.Text != txtRepPass.Text)
                         {
                             FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Las contraseñas no coinciden. Éstas deben coincidir para poder continuar.", "Admin CSY");
+                            FuncionesGenerales.ColoresError(txtRepPass);
                             return false;
+                        }
+                        else
+                        {
+                            FuncionesGenerales.ColoresBien(txtPass);
+                            FuncionesGenerales.ColoresBien(txtRepPass);
+                            FuncionesGenerales.ColoresBien(txtAntiPass);
                         }
                     }
                 }
             }
             if (txtNombre.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio.", "Admin CSY");
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtApellidos.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo apellidos es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtApellidos);
                 return false;
             }
+            else
+	        {
+                FuncionesGenerales.ColoresBien(txtApellidos);
+	        }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El correo ingresado no es valido. Verifique que este escrito correctamente.", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtCorreo);
                     return false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
             if (u.NivelUsuario == NivelesUsuario.Administrador)

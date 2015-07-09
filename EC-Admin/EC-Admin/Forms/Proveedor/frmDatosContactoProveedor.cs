@@ -108,24 +108,44 @@ namespace EC_Admin.Forms
             if (txtNombre.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtApellidos.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo apellidos es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtApellidos);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtApellidos);
             }
             if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar al menos un teléfono", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtTelefono01);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtTelefono01);
             }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "No se reconoce el correo ingresado como uno válido", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtCorreo);
                     return false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
             return true;

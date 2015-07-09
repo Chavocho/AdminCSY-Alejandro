@@ -54,7 +54,7 @@ namespace EC_Admin.Forms
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT c.id, c.total, c.create_time FROM compra AS c INNER JOIN compra_detallada AS d ON (c.id=d.id_compra) WHERE (c.create_time BETWEEN ?fechaIni AND ?fechaFin)";
+                sql.CommandText = "SELECT c.id, c.id_proveedor, c.id_comprador, c.total, c.create_time FROM compra AS c INNER JOIN compra_detallada AS d ON (c.id=d.id_compra) WHERE (c.create_time BETWEEN ?fechaIni AND ?fechaFin) AND c.id_sucursal='" + Config.idSucursal + "'";
                 sql.Parameters.AddWithValue("?fechaIni", fechaIni.ToString("yyyy-MM-dd") + " 00:00:00");
                 sql.Parameters.AddWithValue("?fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 23:59:59");
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
@@ -78,7 +78,7 @@ namespace EC_Admin.Forms
                 dgvCompras.Rows.Clear();
                 foreach (DataRow dr in dt.Rows)
                 {
-                    dgvCompras.Rows.Add(new object[] { dr["id"], dr["create_time"], dr["total"] });
+                    dgvCompras.Rows.Add(new object[] { dr["id"], dr["create_time"], Proveedor.NombreProveedor((int)dr["id_proveedor"]), Trabajador.NombreTrabajador((int)dr["id_comprador"]), dr["total"] });
                 }
                 dgvCompras_RowEnter(dgvCompras, new DataGridViewCellEventArgs(0, 0));
             }
@@ -104,7 +104,10 @@ namespace EC_Admin.Forms
 
         private void dgvCompras_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (dgvCompras.CurrentRow != null)
+                id = (int)dgvCompras[0, e.RowIndex].Value;
+            else
+                id = 0;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)

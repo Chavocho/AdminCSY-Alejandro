@@ -14,15 +14,17 @@ namespace EC_Admin.Forms
     public partial class frmEditarProducto : Form
     {
         Producto p;
+        Inventario i;
+        Unidades u;
         List<int> idPro = new List<int>();
         List<int> idAlm = new List<int>();
         List<int> idCat = new List<int>();
-        Unidades u;
 
         public frmEditarProducto(int id)
         {
             InitializeComponent();
             p = new Producto(id);
+            i = new Inventario(id, Config.idSucursal);
         }
 
         private void CargarProveedores()
@@ -90,6 +92,7 @@ namespace EC_Admin.Forms
             try
             {
                 p.ObtenerDatos();
+                i.ObtenerDatos();
                 cboProveedor.SelectedIndex = AsignarComboBox(idPro, p.IDProveedor);
                 cboCategoria.SelectedIndex = AsignarComboBox(idCat, p.IDCategoria);
                 txtNombre.Text = p.Nombre;
@@ -97,30 +100,39 @@ namespace EC_Admin.Forms
                 txtCodigo.Text = p.Codigo;
                 txtDescripcion01.Text = p.Descripcion01;
                 txtCosto.Text = p.Costo.ToString();
-                txtPrecio.Text = p.Precio.ToString();
-                txtCant.Text = p.Cantidad.ToString();
-                txtPrecioMedioMayoreo.Text = p.PrecioMedioMayoreo.ToString();
-                txtPrecioMayoreo.Text = p.PrecioMayoreo.ToString();
-                txtCantMedioMayoreo.Text = p.CantidadMedioMayoreo.ToString();
-                txtCantMayoreo.Text = p.CantidadMayoreo.ToString();
+                txtPrecio.Text = i.Precio.ToString();
+                txtCant.Text = i.Cantidad.ToString();
+                txtPrecioMedioMayoreo.Text = i.PrecioMedioMayoreo.ToString();
+                txtPrecioMayoreo.Text = i.PrecioMayoreo.ToString();
                 pcbImagen01.Image = p.Imagen01;
                 switch (p.Unidad)
                 {
-                    //case Unidades.Gramo:
-                    //    cboUnidad.SelectedIndex = 0;
-                    //    break;
-                    //case Unidades.Kilogramo:
-                    //    cboUnidad.SelectedIndex = 1;
-                    //    break;
-                    //case Unidades.Mililitro:
-                    //    cboUnidad.SelectedIndex = 2;
-                    //    break;
-                    //case Unidades.Litro:
-                    //    cboUnidad.SelectedIndex = 3;
-                    //    break;
                     case Unidades.Pieza:
                         cboUnidad.SelectedIndex = 0;
                         break;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void CargarPaquetes()
+        {
+            try
+            {
+                MySqlCommand sql = new MySqlCommand();
+                sql.CommandText = "SELECT * FROM paquete WHERE id_producto=?id_producto";
+                sql.Parameters.AddWithValue("?id_producto", p.ID);
+                DataTable dt = ConexionBD.EjecutarConsultaSelect(sql);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dgvPaquetes.Rows.Add(new object[] { dr["id"], dr["precio"], dr["cant"], true, false });
                 }
             }
             catch (MySqlException ex)
@@ -137,14 +149,13 @@ namespace EC_Admin.Forms
         {
             try
             {
-                decimal costo, precio, cant, precioMedioMayoreo, precioMayoreo, cantMedioMayoreo, cantMayoreo;
+                decimal costo, precio, precioMedioMayoreo, precioMayoreo;
+                int cant;
                 decimal.TryParse(txtCosto.Text, out costo);
                 decimal.TryParse(txtPrecio.Text, out precio);
-                decimal.TryParse(txtCant.Text, out cant);
+                int.TryParse(txtCant.Text, out cant);
                 decimal.TryParse(txtPrecioMedioMayoreo.Text, out precioMedioMayoreo);
                 decimal.TryParse(txtPrecioMayoreo.Text, out precioMayoreo);
-                decimal.TryParse(txtCantMedioMayoreo.Text, out cantMedioMayoreo);
-                decimal.TryParse(txtCantMayoreo.Text, out cantMayoreo);
                 p.IDProveedor = idPro[cboProveedor.SelectedIndex];
                 p.IDCategoria = idCat[cboCategoria.SelectedIndex];
                 p.Nombre = txtNombre.Text;
@@ -152,12 +163,10 @@ namespace EC_Admin.Forms
                 p.Codigo = txtCodigo.Text;
                 p.Descripcion01 = txtDescripcion01.Text;
                 p.Costo = costo;
-                p.Precio = precio;
-                p.Cantidad = cant;
-                p.PrecioMedioMayoreo = precioMedioMayoreo;
-                p.PrecioMayoreo = precioMayoreo;
-                p.CantidadMedioMayoreo = cantMedioMayoreo;
-                p.CantidadMayoreo = cantMayoreo;
+                i.Precio = precio;
+                i.Cantidad = cant;
+                i.PrecioMedioMayoreo = precioMedioMayoreo;
+                i.PrecioMayoreo = precioMayoreo;
                 p.Unidad = u;
                 p.Imagen01 = pcbImagen01.Image;
                 p.Imagen02 = pcbImagen02.Image;
@@ -179,74 +188,89 @@ namespace EC_Admin.Forms
             if (cboProveedor.SelectedIndex < 0)
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo proveedor es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(cboProveedor);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(cboProveedor);
             }
             if (cboCategoria.SelectedIndex < 0)
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo categoría es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(cboCategoria);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(cboCategoria);
             }
             if (txtNombre.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtMarca.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo marca es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtMarca);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtMarca);
             }
             if (txtCodigo.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo código es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtCodigo);
                 return false;
+            }
+            else
+            {
+                if (lblInformacionCodigo.Visible)
+                {
+                    return false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCodigo);
+                }
             }
             if (txtCosto.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo costo es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtCosto);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtCosto);
             }
             if (txtPrecio.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo precio es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtPrecio);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtPrecio);
             }
             if (txtCant.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo cantidad es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtCant);
                 return false;
             }
-            if (txtCantMedioMayoreo.Text.Trim() != "")
+            else
             {
-                if (txtPrecioMedioMayoreo.Text.Trim() == "")
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo precio de medio mayoreo debe ser ingresado", "Admin CSY");
-                    return false;
-                }
-            }
-            else if (txtPrecioMedioMayoreo.Text.Trim() != "")
-            {
-                if (txtCantMedioMayoreo.Text.Trim() == "")
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo cantidad de medio mayoreo debe ser ingresado", "Admin CSY");
-                    return false;
-                }
-            }
-            if (txtCantMayoreo.Text.Trim() != "")
-            {
-                if (txtPrecioMayoreo.Text.Trim() == "")
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo precio de mayoreo debe ser ingresado", "Admin CSY");
-                    return false;
-                }
-            }
-            else if (txtPrecioMayoreo.Text.Trim() != "")
-            {
-                if (txtCantMayoreo.Text.Trim() == "")
-                {
-                    FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo cantidad de mayoreo debe ser ingresado", "Admin CSY");
-                    return false;
-                }
+                FuncionesGenerales.ColoresBien(txtCant);
             }
             if (cboUnidad.SelectedIndex < 0)
             {
@@ -257,6 +281,11 @@ namespace EC_Admin.Forms
         }
 
         private void txtNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FuncionesGenerales.VerificarEsNumero(ref sender, ref e, false);
+        }
+
+        private void txtNumerosEnteros_KeyPress(object sender, KeyPressEventArgs e)
         {
             FuncionesGenerales.VerificarEsNumero(ref sender, ref e, false);
         }
@@ -306,24 +335,13 @@ namespace EC_Admin.Forms
             CargarProveedores();
             CargarCategorias();
             CargarDatos();
+            CargarPaquetes();
         }
 
         private void cboUnidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (cboUnidad.SelectedIndex)
             {
-                //case 0:
-                //    u = Unidades.Gramo;
-                //    break;
-                //case 1:
-                //    u = Unidades.Kilogramo;
-                //    break;
-                //case 2:
-                //    u = Unidades.Mililitro;
-                //    break;
-                //case 3:
-                //    u = Unidades.Litro;
-                //    break;
                 case 0:
                     u = Unidades.Pieza;
                     break;
@@ -337,6 +355,7 @@ namespace EC_Admin.Forms
                 try
                 {
                     Editar();
+                    InsertarPaquete();
                     FuncionesGenerales.Mensaje(this, Mensajes.Exito, "¡Se ha modificado el producto correctamente!", "Admin CSY");
                     this.Close();
                 }
@@ -351,5 +370,169 @@ namespace EC_Admin.Forms
             }
         }
 
+        #region Paquetes
+        bool edito;
+
+        private void InsertarDataGrid(string precio, string cant)
+        {
+            dgvPaquetes.Rows.Add(new object[] { 0, decimal.Parse(precio), int.Parse(cant), false, false });
+        }
+
+        private void EditarDataGrid(int rowIndex, string precio, string cant)
+        {
+            dgvPaquetes[1, rowIndex].Value = decimal.Parse(precio);
+            dgvPaquetes[2, rowIndex].Value = int.Parse(cant);
+            dgvPaquetes[4, rowIndex].Value = true;
+        }
+
+        private void EliminarDataGrid(int rowIndex)
+        {
+            dgvPaquetes.Rows.RemoveAt(rowIndex);
+        }
+
+        private void InsertarPaquete()
+        {
+            try
+            {
+                foreach (DataGridViewRow dr in dgvPaquetes.Rows)
+                {
+                    Paquete pa = new Paquete();
+                    pa.IDProducto = p.ID;
+                    pa.Precio = (decimal)dr.Cells[1].Value;
+                    pa.CantidadPaquetes = (int)dr.Cells[2].Value;
+                    if (!(bool)dr.Cells[3].Value)
+                    {
+                        pa.Insertar();
+                    }
+                    else if ((bool)dr.Cells[4].Value)
+                    {
+                        pa.ID = (int)dr.Cells[0].Value;
+                        pa.Editar();
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private bool VerificarDatosPaquete()
+        {
+            bool res = true;
+            if (txtPrecioPaquete.Text.Trim() == "")
+            {
+                FuncionesGenerales.ColoresError(txtPrecioPaquete);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtPrecioPaquete);
+            }
+            if (txtCantPaquete.Text.Trim() == "")
+            {
+                FuncionesGenerales.ColoresError(txtCantPaquete);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtCantPaquete);
+            }
+            return res;
+        }
+
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            edito = false;
+            btnAceptarPaquete.Text = "Crear";
+            txtCantPaquete.Text = "";
+            txtPrecioPaquete.Text = "";
+            pnlPaquete.Visible = true;
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvPaquetes.CurrentRow != null)
+            {
+                edito = true;
+                btnAceptarPaquete.Text = "Modificar";
+                txtCantPaquete.Text = dgvPaquetes[2, dgvPaquetes.CurrentRow.Index].Value.ToString();
+                txtPrecioPaquete.Text = dgvPaquetes[1, dgvPaquetes.CurrentRow.Index].Value.ToString();
+                pnlPaquete.Visible = true;
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgvPaquetes.CurrentRow != null)
+            {
+                if (FuncionesGenerales.Mensaje(this, Mensajes.Pregunta, "¿Realmente desea eliminar este paquete?", "Admin CSY") == System.Windows.Forms.DialogResult.Yes)
+                {
+                    try
+                    {
+                        if ((bool)dgvPaquetes[3, dgvPaquetes.CurrentRow.Index].Value)
+                        {
+                            Paquete.Eliminar((int)dgvPaquetes[0, dgvPaquetes.CurrentRow.Index].Value);
+                        }
+                        EliminarDataGrid(dgvPaquetes.CurrentRow.Index);
+                    }
+                    catch (MySqlException ex)
+                    {
+                        FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al eliminar el paquete. No se ha podido conectar con la base de datos.", "Admin CSY", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error al eliminar el paquete.", "Admin CSY", ex);
+                    }
+                }
+            }
+        }
+
+        private void btnAceptarPaquete_Click(object sender, EventArgs e)
+        {
+            if (VerificarDatosPaquete())
+            {
+                if (!edito)
+                {
+                    InsertarDataGrid(txtPrecioPaquete.Text, txtCantPaquete.Text);
+                    dgvPaquetes.Rows[dgvPaquetes.RowCount - 1].Selected = true;
+                    FuncionesGenerales.Mensaje(this, Mensajes.Exito, "¡Se ha añadido el paquete con éxito!", "Admin CSY");
+                }
+                else
+                {
+                    EditarDataGrid(dgvPaquetes.CurrentRow.Index, txtPrecioPaquete.Text, txtCantPaquete.Text);
+                    FuncionesGenerales.Mensaje(this, Mensajes.Exito, "¡Se ha modificado el paquete con éxito!", "Admin CSY");
+                }
+                pnlPaquete.Visible = false;
+            }
+            else
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "¡Los campos en rojo son obligatorios!", "Admin CSY");
+            }
+        }
+
+        #endregion
+
+        private void txtCodigo_Leave(object sender, EventArgs e)
+        {
+            if (Producto.ExisteCodigo(txtCodigo.Text, p.ID))
+            {
+                return;
+            }
+            if (Producto.ExisteCodigo(txtCodigo.Text))
+            {
+                lblInformacionCodigo.Visible = true;
+                FuncionesGenerales.ColoresError(txtCodigo);
+            }
+            else
+            {
+                lblInformacionCodigo.Visible = false;
+                FuncionesGenerales.ColoresBien(txtCodigo);
+            }
+        }
     }
 }

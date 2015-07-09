@@ -43,6 +43,7 @@
             this.CTelefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bgwBusqueda = new System.ComponentModel.BackgroundWorker();
             this.tmrEspera = new System.Windows.Forms.Timer(this.components);
+            this.btnCambiar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSucursal)).BeginInit();
             this.SuspendLayout();
             // 
@@ -198,11 +199,31 @@
             this.tmrEspera.Interval = 300;
             this.tmrEspera.Tick += new System.EventHandler(this.tmrEspera_Tick);
             // 
+            // btnCambiar
+            // 
+            this.btnCambiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnCambiar.FlatAppearance.BorderSize = 0;
+            this.btnCambiar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(230)))));
+            this.btnCambiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(90)))));
+            this.btnCambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCambiar.Font = new System.Drawing.Font("Corbel", 11F);
+            this.btnCambiar.ForeColor = System.Drawing.Color.White;
+            this.btnCambiar.Location = new System.Drawing.Point(12, 168);
+            this.btnCambiar.Name = "btnCambiar";
+            this.btnCambiar.Size = new System.Drawing.Size(175, 46);
+            this.btnCambiar.TabIndex = 4;
+            this.btnCambiar.Text = "Cambiar sucursal";
+            this.btnCambiar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCambiar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCambiar.UseVisualStyleBackColor = false;
+            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
+            // 
             // frmSucursal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1008, 461);
+            this.Controls.Add(this.btnCambiar);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnNuevo);
@@ -232,5 +253,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CTelefono;
         private System.ComponentModel.BackgroundWorker bgwBusqueda;
         private System.Windows.Forms.Timer tmrEspera;
+        private System.Windows.Forms.Button btnCambiar;
     }
 }

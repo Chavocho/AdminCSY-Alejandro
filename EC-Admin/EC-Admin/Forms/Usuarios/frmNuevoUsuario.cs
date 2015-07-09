@@ -42,7 +42,12 @@ namespace EC_Admin.Forms
         {
             try
             {
+
                 Usuario u = new Usuario();
+                if (Config.idSucursal > 0)
+                    u.IDSucusal = Config.idSucursal;
+                else
+                    u.IDSucusal = 1;
                 u.UserName = txtUsuario.Text;
                 u.Contraseña = txtPass.Text;
                 u.NivelUsuario = n;
@@ -68,11 +73,17 @@ namespace EC_Admin.Forms
             if (txtUsuario.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo usuario es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtUsuario);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtUsuario);
             }
             if (txtPass.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo contraseña es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtPass);
                 return false;
             }
             else
@@ -80,25 +91,46 @@ namespace EC_Admin.Forms
                 if (txtPass.Text != txtRepPass.Text)
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Las contraseñas no coinciden. Éstas deben coincidir para poder continuar.", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtPass);
                     return false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtPass);
+                    FuncionesGenerales.ColoresBien(txtRepPass);
                 }
             }
             if (txtNombre.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtNombre);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtApellidos.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo apellidos es obligatorio.", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtApellidos);
                 return false;
             }
+            else
+	        {
+                FuncionesGenerales.ColoresBien(txtApellidos);
+	        }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El correo ingresado no es valido. Verifique que este escrito correctamente.", "Admin CSY");
+                    FuncionesGenerales.ColoresError(txtCorreo);
                     return false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
             if (lblInfo.Visible)

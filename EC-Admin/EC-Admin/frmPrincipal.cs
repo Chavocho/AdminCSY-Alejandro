@@ -72,7 +72,6 @@ namespace EC_Admin
 
         private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            shapeContainer1.Dispose();
             if (!cierreSesion)
             {
                 Application.Exit();
@@ -131,6 +130,8 @@ namespace EC_Admin
 
         private void btnCotizacion_Click(object sender, EventArgs e)
         {
+            FuncionesGenerales.Mensaje(this, Mensajes.Informativo, "Estamos trabajando para mejorar la experiencia en cotizaciones. Por lo pronto no podrás acceder.", "¯\\_(ツ)_/¯");
+            return;
             if (Producto.CantidadP <= 0)
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Informativo, "Necesitas registrar al menos un producto antes de iniciar el cotizador", "Admin CSY");
@@ -203,6 +204,11 @@ namespace EC_Admin
                 frmUsuarios.Instancia.Show();
             else
                 frmUsuarios.Instancia.Select();
+        }
+
+        private void btnReimpresiónVenta_Click(object sender, EventArgs e)
+        {
+            (new frmReimpresionTicketsVentas()).ShowDialog(this);
         }
     }
 }

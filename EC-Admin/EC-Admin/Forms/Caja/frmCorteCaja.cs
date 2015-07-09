@@ -34,7 +34,7 @@ namespace EC_Admin.Forms
             try
             {
                 MySqlCommand sql = new MySqlCommand();
-                sql.CommandText = "SELECT id, efectivo, voucher, create_time FROM caja WHERE descripcion='CIERRE DE CAJA' AND (create_time BETWEEN ?fechaIni AND ?fechaFin)";
+                sql.CommandText = "SELECT id, efectivo, voucher, create_time FROM caja WHERE descripcion='CIERRE DE CAJA' AND (create_time BETWEEN ?fechaIni AND ?fechaFin) AND id_sucursal='" + Config.idSucursal + "'";
                 sql.Parameters.AddWithValue("?fechaIni", fechaIni.ToString("yyyy-MM-dd") + " 00:00:00");
                 sql.Parameters.AddWithValue("?fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 23:59:59");
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
@@ -134,6 +134,27 @@ namespace EC_Admin.Forms
         {
             Cerrar();
             LlenarDataGrid();
+        }
+
+        private void frmCorteCaja_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!e.Alt)
+            {
+                if (e.Control && e.KeyCode == Keys.I)
+                {
+                    btnImprimir.PerformClick();
+                }
+                if (e.KeyCode == Keys.Up)
+                {
+                    btnBuscar.Focus();
+                    FuncionesGenerales.DataGridViewUp(dgvCaja);
+                }
+                if (e.KeyCode == Keys.Down)
+                {
+                    btnBuscar.Focus();
+                    FuncionesGenerales.DataGridViewDown(dgvCaja);
+                }
+            }
         }
 
         private void tmrEspera_Tick(object sender, EventArgs e)

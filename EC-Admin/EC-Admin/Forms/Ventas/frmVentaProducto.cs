@@ -42,8 +42,8 @@ namespace EC_Admin.Forms
         {
             try
             {
-                string sql = "SELECT id, nombre, codigo, precio, cant, unidad FROM producto " +
-                    "WHERE (nombre LIKE '%" + p + "%' OR codigo='" + p + "') AND eliminado=0";
+                string sql = "SELECT p.id, p.nombre, p.codigo, i.precio, i.cant, p.unidad FROM producto AS p INNER JOIN inventario AS i ON (p.id=i.id_producto)" +
+                    "WHERE (p.nombre LIKE '%" + p + "%' OR p.codigo='" + p + "') AND i.cant>0 AND p.eliminado=0";
                 dt = ConexionBD.EjecutarConsultaSelect(sql);
             }
             catch (MySqlException ex)
@@ -116,11 +116,11 @@ namespace EC_Admin.Forms
                 DataGridViewRow dr = dgvProductos.CurrentRow;
                 if (frm != null)
                 {
-                    frm.AgregarProducto((int)dr.Cells[0].Value, dr.Cells[2].Value.ToString(), dr.Cells[1].Value.ToString(), nudCant.Value, nudDescuento.Value / 100M, (Unidades)Enum.Parse(typeof(Unidades), dr.Cells[5].Value.ToString()));
+                    frm.AgregarProducto((int)dr.Cells[0].Value, dr.Cells[2].Value.ToString(), dr.Cells[1].Value.ToString(), (int)nudCant.Value, nudDescuento.Value, (Unidades)Enum.Parse(typeof(Unidades), dr.Cells[5].Value.ToString()), false);
                 }
                 else if (frmC != null)
                 {
-                    frmC.AgregarProducto((int)dr.Cells[0].Value, dr.Cells[2].Value.ToString(), dr.Cells[1].Value.ToString(), nudCant.Value, nudDescuento.Value / 100M, (Unidades)Enum.Parse(typeof(Unidades), dr.Cells[5].Value.ToString()));
+                    frmC.AgregarProducto((int)dr.Cells[0].Value, dr.Cells[2].Value.ToString(), dr.Cells[1].Value.ToString(), nudCant.Value, nudDescuento.Value, (Unidades)Enum.Parse(typeof(Unidades), dr.Cells[5].Value.ToString()));
                 }
                 this.Close();
             }

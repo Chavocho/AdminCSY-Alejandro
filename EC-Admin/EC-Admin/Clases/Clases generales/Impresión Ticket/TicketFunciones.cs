@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace EC_Admin
 {
@@ -47,6 +48,10 @@ namespace EC_Admin
                     lineaInf02 = ConfiguracionXML.LeerConfiguración("ticket", "lineaInf02");
                     lineaInf03 = ConfiguracionXML.LeerConfiguración("ticket", "lineaInf03");
                     impresora = ConfiguracionXML.LeerConfiguración("ticket", "impresora");
+                    if (ConfiguracionXML.ExisteConfiguracion("ticket", "impresora_tickets"))
+                        impresoraTickets = ConfiguracionXML.LeerConfiguración("ticket", "impresora_tickets");
+                    else
+                        impresoraTickets = "";
                 }
             }
             catch (FormatException ex)
@@ -202,12 +207,13 @@ namespace EC_Admin
         {
             try
             {
-                string turno = "";
                 if (!esCierreCaja)
                 {
                     e.Graphics.DrawString("SERVICIO: VENTA MOSTRADOR", fuenteNormal, Brushes.Black, 0, y);
                     y += saltoLinea;
                     e.Graphics.DrawString("TICKET: " + idVenta.ToString(), fuenteNormal, Brushes.Black, 0, y);
+                    y += saltoLinea;
+                    e.Graphics.DrawString("CLIENTE: " + Cliente.NombreCliente((int)ObtenerDatoDataTable(dtVenta, "id_cliente")), fuenteNormal, Brushes.Black, 0, y);
                 }
                 else
                 {
@@ -283,22 +289,30 @@ namespace EC_Admin
         /// <exception cref="System.Exception"></exception>
         private void AgregarProductosVentas(ref PrintPageEventArgs e, DataTable dt)
         {
+            float posProdCod = 0F;
+            float posPrecio = (e.PageBounds.Width / 4) + 25;
+            float posCant = (e.PageBounds.Width / 4) * 2 + 15;
+            float posImp = (e.PageBounds.Width / 4) * 3 - 5;
             try
             {
-                e.Graphics.DrawString("PRODUCTO", fuenteNormalResaltada, Brushes.Black, 0F, y);
-                e.Graphics.DrawString("PRECIO", fuenteNormalResaltada, Brushes.Black, (e.PageBounds.Width / 4) + 25, y);
-                e.Graphics.DrawString("CANT", fuenteNormalResaltada, Brushes.Black, (e.PageBounds.Width / 4) * 2 + 15, y);
-                e.Graphics.DrawString("IMP", fuenteNormalResaltada, Brushes.Black, (e.PageBounds.Width / 4) * 3 - 5, y);
+                e.Graphics.DrawString("NOM/CÓD", fuenteNormalResaltada, Brushes.Black, posProdCod, y);
+                e.Graphics.DrawString("PRECIO", fuenteNormalResaltada, Brushes.Black, posPrecio, y);
+                e.Graphics.DrawString("CANT", fuenteNormalResaltada, Brushes.Black, posCant, y);
+                e.Graphics.DrawString("IMP", fuenteNormalResaltada, Brushes.Black, posImp, y);
                 y += saltoLinea;
                 foreach (DataRow dr in dt.Rows)
                 {
+                    string codigo = Producto.CodigoProducto((int)dr["id_producto"]);
                     string prod = Producto.NombreProducto((int)dr["id_producto"]);
                     decimal precio = (decimal)dr["precio"];
                     decimal cant = decimal.Parse(dr["cant"].ToString());
                     AgregarNombreProducto(ref e, prod);
-                    e.Graphics.DrawString(precio.ToString("C2"), fuenteNormal, Brushes.Black, (e.PageBounds.Width / 4) + 25, y);
-                    e.Graphics.DrawString(cant.ToString(), fuenteNormal, Brushes.Black, (e.PageBounds.Width / 4) * 2 + 15, y);
-                    e.Graphics.DrawString((precio * cant).ToString("C2"), fuenteNormal, Brushes.Black, (e.PageBounds.Width / 4) * 3 - 5, y);
+                    e.Graphics.DrawString(prod, fuenteNormal, Brushes.Black, posProdCod, y);
+                    y += saltoLinea;
+                    e.Graphics.DrawString(codigo, fuenteNormal, Brushes.Black, posProdCod, y);
+                    e.Graphics.DrawString(precio.ToString("C2"), fuenteNormal, Brushes.Black, posPrecio, y);
+                    e.Graphics.DrawString(cant.ToString(), fuenteNormal, Brushes.Black, posCant, y);
+                    e.Graphics.DrawString((precio * cant).ToString("C2"), fuenteNormal, Brushes.Black, posImp, y);
                     y += saltoLinea;
                 }
             }
@@ -556,15 +570,15 @@ namespace EC_Admin
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.ArgumentException"></exception>
         /// <exception cref="System.Exception"></exception>
-        private void AgregarCodigoBarrasProducto(ref PrintPageEventArgs e, int idProd)
+        private void AgregarCodigoBarrasProducto(ref PrintPageEventArgs e)
         {
             try
             {
                 int salto;
-                e.Graphics.DrawString("PRODUCTO: " + Producto.NombreProducto(idProd), fuenteGrande, Brushes.Black, 0, y);
+                e.Graphics.DrawString("PRODUCTO: " + Producto.NombreProducto(idProd).ToUpper(), fuenteGrande, Brushes.Black, 0, y);
                 y += 30;
-                CentrarTexto(ref e, "*" + idProd.ToString() + "*", new Font("IDAutomationHC39M", 10), Brushes.Black);
-                salto = Convert.ToInt32(e.Graphics.MeasureString(idProd.ToString(), new Font("IDAutomationHC39M", 10)).Height - 10);
+                CentrarTexto(ref e, "*" + Producto.CodigoProducto(idProd) + "*", new Font("IDAutomationHC39M Free Version", 10), Brushes.Black);
+                salto = Convert.ToInt32(e.Graphics.MeasureString(idProd.ToString(), new Font("IDAutomationHC39M Free Version", 10)).Height - 10);
                 y += salto;
                 e.Graphics.FillRectangle(Brushes.White, 0, y, e.PageBounds.Width, 10);
             }
@@ -810,6 +824,18 @@ namespace EC_Admin
                 throw ex;
             }
             return total;
+        }
+
+        private void DatosDevolucion()
+        {
+            try
+            {
+                string sql = "SELECT * FROM devoluciones WHERE id='" + idDev + "'";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

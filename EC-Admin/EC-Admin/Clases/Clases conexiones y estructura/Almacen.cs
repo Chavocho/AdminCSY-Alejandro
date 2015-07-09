@@ -60,6 +60,9 @@ namespace EC_Admin
         #endregion
 
         #region Cantidad
+        /// <summary>
+        /// Método que actualiza la cantidad de almacenes que hay en la base de datos.
+        /// </summary>
         private static void Cant()
         {
             try
@@ -81,16 +84,26 @@ namespace EC_Admin
         }
         #endregion
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Almacen
+        /// </summary>
         public Almacen()
         {
 
         }
 
+        /// <summary>
+        /// Inicializa la instancia de la clase Almacen con el ID dado
+        /// </summary>
+        /// <param name="id">ID de almacen</param>
         public Almacen(int id)
         {
             this.ID = id;
         }
 
+        /// <summary>
+        /// Método que obtiene todos los datos de el almacen con el ID especificado, y los guarda en las propiedades
+        /// </summary>
         public void ObtenerDatos()
         {
             try
@@ -117,6 +130,10 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que inserta los datos dados en las propiedades en la base de datos, 
+        /// y guarda el ID en la propiedad correspondiente
+        /// </summary>
         public void Insertar()
         {
             try
@@ -140,6 +157,9 @@ namespace EC_Admin
             }
         }
 
+        /// <summary>
+        /// Método que modifica los datos de la base de datos con los datos dados en las propiedades
+        /// </summary>
         public void Editar()
         {
             try

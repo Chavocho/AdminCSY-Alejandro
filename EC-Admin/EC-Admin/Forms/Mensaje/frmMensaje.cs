@@ -179,7 +179,7 @@ namespace EC_Admin
 
         private void lblCerrar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
 
         private void lblCerrar_MouseEnter(object sender, EventArgs e)

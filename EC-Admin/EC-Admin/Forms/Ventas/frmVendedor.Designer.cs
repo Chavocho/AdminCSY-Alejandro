@@ -147,9 +147,9 @@
             this.lblENombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.lblENombre.Location = new System.Drawing.Point(9, 396);
             this.lblENombre.Name = "lblENombre";
-            this.lblENombre.Size = new System.Drawing.Size(122, 18);
+            this.lblENombre.Size = new System.Drawing.Size(111, 18);
             this.lblENombre.TabIndex = 3;
-            this.lblENombre.Text = "Comprador actual:";
+            this.lblENombre.Text = "Vendedor actual:";
             // 
             // lblNombre
             // 

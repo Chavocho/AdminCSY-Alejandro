@@ -224,6 +224,9 @@ namespace EC_Admin
         }
         #endregion
 
+        /// <summary>
+        /// Método que actualiza la cantidad de contactos de cliente asociados con su ID
+        /// </summary>
         private static void Cant()
         {
             try

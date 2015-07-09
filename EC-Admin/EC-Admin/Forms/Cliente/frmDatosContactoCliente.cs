@@ -106,30 +106,56 @@ namespace EC_Admin.Forms
 
         private bool VerificarDatos()
         {
+            bool res = true;
             if (txtNombre.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo nombre es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtNombre);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtNombre);
             }
             if (txtApellidos.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo apellidos es obligatorio", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtApellidos);
+                res = false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtApellidos);
             }
             if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() == "")
             {
-                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar al menos un teléfono", "Admin CSY");
-                return false;
+                FuncionesGenerales.ColoresError(txtTelefono01);
+                res = false;
+            }
+            else if (txtTelefono01.Text.Trim() == "" && txtTelefono02.Text.Trim() != "")
+            {
+                txtTelefono01.Text = txtTelefono02.Text;
+                txtTelefono02.Text = "";
+                FuncionesGenerales.ColoresBien(txtTelefono01);
+                FuncionesGenerales.ColoresBien(txtTelefono02);
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtTelefono01);
+                FuncionesGenerales.ColoresBien(txtTelefono02);
             }
             if (txtCorreo.Text.Trim() != "")
             {
                 if (!FuncionesGenerales.EsCorreoValido(txtCorreo.Text))
                 {
+                    FuncionesGenerales.ColoresError(txtCorreo); 
                     FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "No se reconoce el correo ingresado como uno válido", "Admin CSY");
-                    return false;
+                    res = false;
+                }
+                else
+                {
+                    FuncionesGenerales.ColoresBien(txtCorreo);
                 }
             }
-            return true;
+            return res;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -170,6 +196,10 @@ namespace EC_Admin.Forms
                         FuncionesGenerales.Mensaje(this, Mensajes.Error, "Ocurrió un error genérico al modificar el contacto.", "Admin CSY", ex);
                     }
                 }
+            }
+            else
+            {
+                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "¡Los campos en rojo son obligatorios o tienen un error!", "Admin CSY");
             }
         }
 

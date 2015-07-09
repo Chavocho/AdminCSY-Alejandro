@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <configuraciones>
   <basedatos>
-    <server>/bmEtI8XUlOHHG6ynrK0gw==</server>
-    <base>VsmsJeNeWgNkx7oGHE5eDFP1I+gLGkXZ</base>
-    <usuario>M7PjMfY2PVY=</usuario>
-    <pass>U/Uj6AsaRdk=</pass>
+    <server>g6yD7ISLaLiJDFKvRYsaFQ==</server>
+    <base>iCTPtMiXh8yxSZTTM0OPEA==</base>
+    <usuario>iCTPtMiXh8yBwTSjjDkxfQ==</usuario>
+    <pass>UGwyy9cMOm5A9Lip1bAQEw==</pass>
   </basedatos>
-  <sucursal>
-    <id>z9f4VO/8BoU=</id>
-    <nombre>2zqoOXCtLDM8m5avbt/L9g==</nombre>
-  </sucursal>
   <correo>
     <correo_interno>U/Uj6AsaRdk=</correo_interno>
     <pass_interno>U/Uj6AsaRdk=</pass_interno>
@@ -27,8 +23,18 @@
     <lineaInf01>x0G6tzlGkmE=</lineaInf01>
     <lineaInf02>UO7KBa+Ta5M=</lineaInf02>
     <lineaInf03>Sdn920R+n0IdqdzWcZPhFA==</lineaInf03>
-    <impresora>JmiYVF2jsY2KC0m/uuXyAsjhLYdC761FZ38AAkxO5iQ=</impresora>
+    <impresora>FmOGdqRPtp6688JBU1Oq2/D/XZgOVCdgzCDebeas4wg=</impresora>
     <preguntar>mApNpFvMMuQ=</preguntar>
     <imprimir>mApNpFvMMuQ=</imprimir>
+    <impresora_tickets>FmOGdqRPtp6688JBU1Oq2/D/XZgOVCdgzCDebeas4wg=</impresora_tickets>
   </ticket>
+  <POS>
+    <cant_medio_mayoreo>QPS4qdWwEBM=</cant_medio_mayoreo>
+    <cant_mayoreo>6x9STa2BChc=</cant_mayoreo>
+    <IVA>nO6eQZM+6AE=</IVA>
+  </POS>
+  <sucursal>
+    <id>z9f4VO/8BoU=</id>
+    <nombre>2zqoOXCtLDOCFNp8o1cHATPNIdPrFmNwDkcARtybWew=</nombre>
+  </sucursal>
 </configuraciones>

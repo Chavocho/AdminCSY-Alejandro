@@ -44,28 +44,49 @@ namespace EC_Admin.Forms
             if (txtClabe.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo clabe es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtClabe);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtClabe);
             }
             if (txtBanco.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo banco es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtBanco);
                 return false;
+            }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtBanco);
             }
             if (txtBeneficiario.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo beneficiario es obligatorio", "Admin CSY");
+                FuncionesGenerales.ColoresError(txtBeneficiario);
                 return false;
             }
-            if (txtSucursal.Text.Trim() == "")
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtBeneficiario);
+            }
+            /*if (txtSucursal.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo sucursal es obligatorio", "Admin CSY");
+
                 return false;
             }
+            else
+            {
+                FuncionesGenerales.ColoresBien(txtSucursal);
+            }*/
+            /*
             if (txtNumCuenta.Text.Trim() == "")
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El campo número de cuenta es obligatorio", "Admin CSY");
                 return false;
-            }
+            }*/
             return true;
         }
 

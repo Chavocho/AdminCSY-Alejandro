@@ -57,14 +57,16 @@
       <HintPath>..\..\..\Desktop\itextsharp-all-5.5.4\itextsharp-dll-xtra\itextsharp.xtra.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.8.3\Assemblies\v4.5\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +75,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Clases conexiones y estructura\Almacen.cs" />
@@ -83,14 +88,19 @@
     <Compile Include="Clases\Clases conexiones y estructura\Compra.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Cotizacion.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Cuenta.cs" />
+    <Compile Include="Clases\Clases conexiones y estructura\Devoluciones.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Horario.cs" />
+    <Compile Include="Clases\Clases conexiones y estructura\Inventario.cs" />
+    <Compile Include="Clases\Clases conexiones y estructura\Paquete.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Privilegios.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Producto.cs" />
+    <Compile Include="Clases\Clases conexiones y estructura\Promociones.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Proveedor.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\ProveedorContacto.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Puesto.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Sucursal.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Trabajador.cs" />
+    <Compile Include="Clases\Clases conexiones y estructura\Traspaso.cs" />
     <Compile Include="Clases\Clases conexiones y estructura\Venta.cs" />
     <Compile Include="Clases\Clases generales\Camara.cs" />
     <Compile Include="Clases\Clases generales\Correos.cs" />
@@ -252,6 +262,12 @@
     <Compile Include="Forms\Configs\frmConfigCorreo.Designer.cs">
       <DependentUpon>frmConfigCorreo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Configs\frmConfigGeneral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Configs\frmConfigGeneral.Designer.cs">
+      <DependentUpon>frmConfigGeneral.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Configs\frmConfigs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -330,6 +346,12 @@
     <Compile Include="Forms\PrimerUso\frmTerminado.Designer.cs">
       <DependentUpon>frmTerminado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Producto\frmCantidadTickets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Producto\frmCantidadTickets.Designer.cs">
+      <DependentUpon>frmCantidadTickets.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Producto\frmEditarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,6 +369,30 @@
     </Compile>
     <Compile Include="Forms\Producto\frmProducto.Designer.cs">
       <DependentUpon>frmProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmEditarPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmEditarPromocion.Designer.cs">
+      <DependentUpon>frmEditarPromocion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmNuevaPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmNuevaPromocion.Designer.cs">
+      <DependentUpon>frmNuevaPromocion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmProductoPromocion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmProductoPromocion.Designer.cs">
+      <DependentUpon>frmProductoPromocion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmPromociones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Promocion\frmPromociones.Designer.cs">
+      <DependentUpon>frmPromociones.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Proveedor\frmEditarProveedor.cs">
       <SubType>Form</SubType>
@@ -384,6 +430,12 @@
     <Compile Include="Forms\Reportes\frmVentasDiarias.Designer.cs">
       <DependentUpon>frmVentasDiarias.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Reportes\frmVentasFechas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reportes\frmVentasFechas.Designer.cs">
+      <DependentUpon>frmVentasFechas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Sucursal\Domicilio\frmAsignarDomicilio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -407,6 +459,12 @@
     </Compile>
     <Compile Include="Forms\Sucursal\Domicilio\frmNuevoDomicilio.Designer.cs">
       <DependentUpon>frmNuevoDomicilio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Sucursal\frmAsignarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Sucursal\frmAsignarSucursal.Designer.cs">
+      <DependentUpon>frmAsignarSucursal.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Sucursal\frmEditarSucursal.cs">
       <SubType>Form</SubType>
@@ -486,6 +544,30 @@
     <Compile Include="Forms\Trabajador\frmTrabajador.Designer.cs">
       <DependentUpon>frmTrabajador.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Traspasos\frmDetalleTraspaso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmDetalleTraspaso.Designer.cs">
+      <DependentUpon>frmDetalleTraspaso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmNuevoTraspaso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmNuevoTraspaso.Designer.cs">
+      <DependentUpon>frmNuevoTraspaso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmProductosTraspasos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmProductosTraspasos.Designer.cs">
+      <DependentUpon>frmProductosTraspasos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmTraspasos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Traspasos\frmTraspasos.Designer.cs">
+      <DependentUpon>frmTraspasos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Usuarios\frmEditarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -540,6 +622,30 @@
     <Compile Include="Forms\Usuarios\Restablecimiento de contraseña\frmVerificarUsuario.Designer.cs">
       <DependentUpon>frmVerificarUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmCancelaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmCancelaciones.Designer.cs">
+      <DependentUpon>frmCancelaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDetalleProductoDevolucion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDetalleProductoDevolucion.Designer.cs">
+      <DependentUpon>frmDetalleProductoDevolucion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevolucionCantidadProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevolucionCantidadProductos.Designer.cs">
+      <DependentUpon>frmDevolucionCantidadProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevoluciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevoluciones.Designer.cs">
+      <DependentUpon>frmDevoluciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Ventas\frmCobrar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -551,6 +657,24 @@
     </Compile>
     <Compile Include="Forms\Ventas\frmDatosVentaProducto.Designer.cs">
       <DependentUpon>frmDatosVentaProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmDevolucionesVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmDevolucionesVenta.Designer.cs">
+      <DependentUpon>frmDevolucionesVenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmPaquetes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmPaquetes.Designer.cs">
+      <DependentUpon>frmPaquetes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmReimpresionTicketsVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmReimpresionTicketsVentas.Designer.cs">
+      <DependentUpon>frmReimpresionTicketsVentas.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Ventas\frmVendedor.cs">
       <SubType>Form</SubType>
@@ -581,6 +705,18 @@
     </Compile>
     <Compile Include="Forms\Ventas\frmVentaProducto.Designer.cs">
       <DependentUpon>frmVentaProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmVentaPromociones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Ventas\frmVentaPromociones.Designer.cs">
+      <DependentUpon>frmVentaPromociones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDescripcion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDescripcion.Designer.cs">
+      <DependentUpon>frmDescripcion.cs</DependentUpon>
     </Compile>
     <Compile Include="frmEspera.cs">
       <SubType>Form</SubType>
@@ -686,6 +822,9 @@
     <EmbeddedResource Include="Forms\Configs\frmConfigCorreo.resx">
       <DependentUpon>frmConfigCorreo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Configs\frmConfigGeneral.resx">
+      <DependentUpon>frmConfigGeneral.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Configs\frmConfigs.resx">
       <DependentUpon>frmConfigs.cs</DependentUpon>
     </EmbeddedResource>
@@ -725,6 +864,9 @@
     <EmbeddedResource Include="Forms\PrimerUso\frmTerminado.resx">
       <DependentUpon>frmTerminado.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Producto\frmCantidadTickets.resx">
+      <DependentUpon>frmCantidadTickets.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Producto\frmEditarProducto.resx">
       <DependentUpon>frmEditarProducto.cs</DependentUpon>
     </EmbeddedResource>
@@ -733,6 +875,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Producto\frmProducto.resx">
       <DependentUpon>frmProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Promocion\frmEditarPromocion.resx">
+      <DependentUpon>frmEditarPromocion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Promocion\frmNuevaPromocion.resx">
+      <DependentUpon>frmNuevaPromocion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Promocion\frmProductoPromocion.resx">
+      <DependentUpon>frmProductoPromocion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Promocion\frmPromociones.resx">
+      <DependentUpon>frmPromociones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Proveedor\frmContactosProveedor.resx">
       <DependentUpon>frmContactosProveedor.cs</DependentUpon>
@@ -752,6 +906,9 @@
     <EmbeddedResource Include="Forms\Reportes\frmVentasDiarias.resx">
       <DependentUpon>frmVentasDiarias.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reportes\frmVentasFechas.resx">
+      <DependentUpon>frmVentasFechas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sucursal\Domicilio\frmAsignarDomicilio.resx">
       <DependentUpon>frmAsignarDomicilio.cs</DependentUpon>
     </EmbeddedResource>
@@ -763,6 +920,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sucursal\Domicilio\frmNuevoDomicilio.resx">
       <DependentUpon>frmNuevoDomicilio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Sucursal\frmAsignarSucursal.resx">
+      <DependentUpon>frmAsignarSucursal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sucursal\frmEditarSucursal.resx">
       <DependentUpon>frmEditarSucursal.cs</DependentUpon>
@@ -803,6 +963,18 @@
     <EmbeddedResource Include="Forms\Trabajador\frmTrabajador.resx">
       <DependentUpon>frmTrabajador.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Traspasos\frmDetalleTraspaso.resx">
+      <DependentUpon>frmDetalleTraspaso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Traspasos\frmNuevoTraspaso.resx">
+      <DependentUpon>frmNuevoTraspaso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Traspasos\frmProductosTraspasos.resx">
+      <DependentUpon>frmProductosTraspasos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Traspasos\frmTraspasos.resx">
+      <DependentUpon>frmTraspasos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Usuarios\frmEditarUsuario.resx">
       <DependentUpon>frmEditarUsuario.cs</DependentUpon>
     </EmbeddedResource>
@@ -830,11 +1002,32 @@
     <EmbeddedResource Include="Forms\Usuarios\Restablecimiento de contraseña\frmVerificarUsuario.resx">
       <DependentUpon>frmVerificarUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\Cancelaciones y devoluciones\frmCancelaciones.resx">
+      <DependentUpon>frmCancelaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\Cancelaciones y devoluciones\frmDetalleProductoDevolucion.resx">
+      <DependentUpon>frmDetalleProductoDevolucion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevolucionCantidadProductos.resx">
+      <DependentUpon>frmDevolucionCantidadProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\Cancelaciones y devoluciones\frmDevoluciones.resx">
+      <DependentUpon>frmDevoluciones.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Ventas\frmCobrar.resx">
       <DependentUpon>frmCobrar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Ventas\frmDatosVentaProducto.resx">
       <DependentUpon>frmDatosVentaProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\frmDevolucionesVenta.resx">
+      <DependentUpon>frmDevolucionesVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\frmPaquetes.resx">
+      <DependentUpon>frmPaquetes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\frmReimpresionTicketsVentas.resx">
+      <DependentUpon>frmReimpresionTicketsVentas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Ventas\frmVendedor.resx">
       <DependentUpon>frmVendedor.cs</DependentUpon>
@@ -850,6 +1043,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Ventas\frmVentaProducto.resx">
       <DependentUpon>frmVentaProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Ventas\frmVentaPromociones.resx">
+      <DependentUpon>frmVentaPromociones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDescripcion.resx">
+      <DependentUpon>frmDescripcion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEspera.resx">
       <DependentUpon>frmEspera.cs</DependentUpon>
@@ -911,6 +1110,13 @@
   <ItemGroup>
     <Content Include="icon-point-of-sale-2x.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlesUsuario\ControlesUsuario.csproj">
+      <Project>{20388F05-20F2-4FF5-A60F-36562DA489CA}</Project>
+      <Name>ControlesUsuario</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

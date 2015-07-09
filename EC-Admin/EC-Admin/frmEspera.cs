@@ -18,5 +18,10 @@ namespace EC_Admin
             lblMensaje.Text = mensaje;
             lblMensaje.Left = (this.Width - lblMensaje.Width) / 2;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

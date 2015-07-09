@@ -16,7 +16,24 @@ namespace EC_Admin.Forms
         int id;
         frmPOS frm;
         decimal total;
+        decimal totalPorcentaje = 0;
         TipoPago t;
+
+        private int idDevolucion = 0;
+
+        public int IDDevolucion
+        {
+            get { return idDevolucion; }
+            set { idDevolucion = value; }
+        }
+
+        private decimal saldo = 0;
+
+        public decimal Saldo
+        {
+            get { return saldo; }
+            set { saldo = value; }
+        }
 
         public frmCobrar(frmPOS frm, int id, decimal total)
         {
@@ -37,14 +54,12 @@ namespace EC_Admin.Forms
             if (cambio > 0)
             {
                 lblECambio.Text = "Falta:";
-                lblECambio.Location = new Point(30, 121);
                 lblCambio.BackColor = Colores.Error;
                 lblCambio.Text = cambio.ToString("C2");
             }
             else
             {
                 lblECambio.Text = "Cambio:";
-                lblECambio.Location = new Point(10, 121);
                 lblCambio.BackColor = Colores.Exito;
                 lblCambio.Text = (cambio * -1).ToString("C2");
             }
@@ -58,25 +73,23 @@ namespace EC_Admin.Forms
             lblCambio.Text = "$0.00";
             lblCambio.BackColor = Colores.Exito;
             lblECambio.Text = "Cambio:";
-            lblECambio.Location = new Point(206, 102);
         }
 
         private void MovimientoCaja()
         {
             try
             {
-                decimal efe;
-                decimal.TryParse(txtEfectivo.Text, out efe);
                 Caja c = new Caja();
                 c.Descripcion = "VENTA MOSTRADOR";
-                c.Efectivo = efe;
-                if (cboTipoPago.SelectedIndex == 1 || cboTipoPago.SelectedIndex == 2)
+                if (cboTipoPago.SelectedIndex == 0)
                 {
-                    c.Voucher = total;
-                }
-                else
-                {
+                    c.Efectivo = total;
                     c.Voucher = 0M;
+                }
+                else if (cboTipoPago.SelectedIndex == 1 || cboTipoPago.SelectedIndex == 2)
+                {
+                    c.Efectivo = 0M;
+                    c.Voucher = totalPorcentaje;
                 }
                 c.TipoMovimiento = EC_Admin.MovimientoCaja.Entrada;
                 c.IDSucursal = Config.idSucursal;
@@ -108,6 +121,7 @@ namespace EC_Admin.Forms
         private void frmCobrar_Load(object sender, EventArgs e)
         {
             txtEfectivo.Select();
+            cboTipoPago.SelectedIndex = 0;
         }
 
         private void cboTipoPago_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,9 +131,11 @@ namespace EC_Admin.Forms
                 case 0:
                     lblEEfectivo.Enabled = true;
                     txtEfectivo.Enabled = true;
-                    txtDatos.Visible = lblEDatos.Visible = false;
+                    txtDatos.Visible = lblEDatos.Visible = txtPorcentajeImpuesto.Visible = lblEPorcentajeImpuesto.Visible = lblEFolioTerminal.Visible = txtFolioTerminal.Visible = false;
                     CalcularCambio();
                     t = TipoPago.Efectivo;
+                    this.Size = new Size(580, 275);
+                    txtEfectivo.Select();
                     break;
                 //case 1:
                 //    QuitarEfectivo();
@@ -129,14 +145,20 @@ namespace EC_Admin.Forms
                 case 1:
                     QuitarEfectivo();
                     lblEDatos.Text = "Núm. de tarjeta";
-                    txtDatos.Visible = lblEDatos.Visible = true;
+                    txtDatos.Visible = lblEDatos.Visible = txtPorcentajeImpuesto.Visible = lblEPorcentajeImpuesto.Visible = lblEFolioTerminal.Visible = txtFolioTerminal.Visible = true;
+                    txtPorcentajeImpuesto.Text = "0";
                     t = TipoPago.Crédito;
+                    this.Size = new Size(580, 318);
+                    txtPorcentajeImpuesto_TextChanged(txtPorcentajeImpuesto, new EventArgs());
                     break;
                 case 2:
                     QuitarEfectivo();
                     lblEDatos.Text = "Núm. de tarjeta";
-                    txtDatos.Visible = lblEDatos.Visible = true;
+                    txtDatos.Visible = lblEDatos.Visible = txtPorcentajeImpuesto.Visible = lblEPorcentajeImpuesto.Visible = lblEFolioTerminal.Visible = txtFolioTerminal.Visible = true;
+                    txtPorcentajeImpuesto.Text = "0";
                     t = TipoPago.Débito;
+                    this.Size = new Size(580, 318);
+                    txtPorcentajeImpuesto_TextChanged(txtPorcentajeImpuesto, new EventArgs());
                     break;
                 //case 4:
                 //    QuitarEfectivo();
@@ -161,18 +183,35 @@ namespace EC_Admin.Forms
             {
                 try
                 {
-                    if (txtDatos.Visible)
+                    switch (cboTipoPago.SelectedIndex)
                     {
-                        if (txtDatos.Text.Trim() == "")
-                        {
-                            FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar el número de la tarjeta", "Admin CSY");
-                            return;
-                        }
+                        case 0:
+                            frm.GuardarVenta(false, t);
+                            break;
+                        case 1:
+                        case 2:
+                            if (decimal.Parse(txtPorcentajeImpuesto.Text) < 0)
+                            {
+                                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El porcentaje de impuesto debe ser mayor o igual a 0", "Admin CSY");
+                                return;
+                            }
+                            if (txtDatos.Text.Trim() == "")
+                            {
+                                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar el número de la tarjeta", "Admin CSY");
+                                return;
+                            }
+                            if (txtFolioTerminal.Text == "")
+                            {
+                                FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "Debes ingresar el folio de la terminal de tarjetas", "Admin CSY");
+                                return;
+                            }
+                            frm.GuardarVenta(false, t, txtDatos.Text, txtFolioTerminal.Text, totalPorcentaje - total);
+                            break;
                     }
-                    frm.GuardarVenta(false, t);
                     MovimientoCaja();
                     if (FuncionesGenerales.ImprimirTicket(this, "¿Desea imprimir el ticket de ésta venta?"))
                     {
+                        ImprimirTicket();
                         ImprimirTicket();
                     }
                     FuncionesGenerales.Mensaje(this, Mensajes.Exito, "¡Se ha guardado los datos de la venta correctamente!", "Admin CSY");
@@ -191,6 +230,39 @@ namespace EC_Admin.Forms
             {
                 FuncionesGenerales.Mensaje(this, Mensajes.Alerta, "El efectivo debe ser mayor o igual al total", "Admin CSY");
             }
+        }
+
+        private void txtPorcentajeImpuesto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FuncionesGenerales.VerificarEsNumero(ref sender, ref e, false);
+        }
+
+        private void txtPorcentajeImpuesto_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPorcentajeImpuesto.Text != "")
+            {
+                totalPorcentaje = total + (total * (decimal.Parse(txtPorcentajeImpuesto.Text) / 100));
+            }
+            else
+            {
+                totalPorcentaje = total;
+            }
+            lblTotal.Text = totalPorcentaje.ToString("C2");
+        }
+
+        private void txtEfectivo_Enter(object sender, EventArgs e)
+        {
+            txtEfectivo.SelectAll();
+        }
+
+        private void txtEfectivo_Click(object sender, EventArgs e)
+        {
+            txtEfectivo.SelectAll();
+        }
+
+        private void chbSaldo_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
